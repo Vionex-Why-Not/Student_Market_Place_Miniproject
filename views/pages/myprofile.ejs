@@ -1,0 +1,1818 @@
+<%- include('../partials/head', { title, headExtras: '', extraScript: '' }) %>
+<style>
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --br: #7B4B2A;
+  --brd: #5A361D;
+  --brl: #C9A27A;
+  --bg: #F7F3EE;
+  --bg2: #EFE6DB;
+  --bg3: #E5D8C8;
+  --bor: #DDD0C0;
+  --tx: #231209;
+  --tx2: #6B4838;
+  --tx3: #9C7B66;
+  --wh: #FFFFFF;
+  --gr: #276840;
+  --grb: #E8F5ED;
+  --rd: #B83232;
+  --rdb: #FDEAEA;
+  --amb: #FEF3DC;
+  --am: #A06B10;
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--tx);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--wh);
+  border-bottom: 1px solid var(--bor);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  height: 60px;
+  gap: 12px;
+}
+
+.nav-logo {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-logo b {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--br);
+}
+
+.nav-logo small {
+  font-size: 10px;
+  color: var(--tx3);
+}
+
+.nav-r {
+  margin-left: auto;
+  display: flex;
+  gap: 9px;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 9px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Sora', sans-serif;
+  transition: .18s;
+}
+
+.btn-g {
+  background: var(--bg2);
+  color: var(--br);
+  border: 1px solid var(--bor);
+}
+
+.btn-g:hover {
+  background: var(--bg3);
+}
+
+.btn-m {
+  background: var(--br);
+  color: var(--wh);
+}
+
+.btn-m:hover {
+  background: var(--brd);
+}
+
+.btn-d {
+  background: var(--rdb);
+  color: var(--rd);
+  border: 1px solid #F0C0C0;
+}
+
+.btn-d:hover {
+  background: #FADBDB;
+}
+
+/* BANNER */
+.band {
+  height: 195px;
+  background: linear-gradient(130deg, #D4A574 0%, var(--br) 55%, #3A1E0C 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 15% 60%, rgba(255, 255, 255, .1) 0%, transparent 60%), radial-gradient(ellipse 40% 60% at 85% 20%, rgba(255, 255, 255, .07) 0%, transparent 50%);
+}
+
+/* PROFILE HEADER */
+.ph-wrap {
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Avatar floats up over banner, then name sits cleanly below */
+.av-float {
+  margin-top: -58px;
+  margin-bottom: 16px;
+}
+
+.av {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--brl), var(--brd));
+  border: 4px solid var(--wh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 28px rgba(43, 27, 18, .2);
+}
+
+.av-l {
+  font-family: 'Lora', serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--wh);
+  letter-spacing: -1px;
+}
+
+/* Name + actions row fully below avatar */
+.ph-name-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-bottom: 24px;
+}
+
+.user-name {
+  font-family: 'Lora', serif;
+  font-size: 27px;
+  font-weight: 700;
+  color: var(--tx);
+  letter-spacing: -.3px;
+  line-height: 1.2;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 9px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--wh);
+  border: 1px solid var(--bor);
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 11px;
+  color: var(--tx2);
+  font-weight: 500;
+}
+
+.ph-actions {
+  display: flex;
+  gap: 9px;
+  padding-top: 4px;
+}
+
+/* PAGE GRID */
+.pg {
+  max-width: 1020px;
+  margin: 0 auto 70px;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: 268px 1fr;
+  gap: 24px;
+  margin-top: 0;
+}
+
+/* SIDEBAR CARD */
+.card {
+  background: var(--wh);
+  border: 1px solid var(--bor);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(43, 27, 18, .06);
+}
+
+.ch {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--bor);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ch h3 {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.che {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--br);
+  cursor: pointer;
+}
+
+.che:hover {
+  text-decoration: underline;
+}
+
+.cb {
+  padding: 16px 18px;
+}
+
+.ar {
+  display: flex;
+  gap: 11px;
+  margin-bottom: 13px;
+  align-items: flex-start;
+}
+
+.ar:last-child {
+  margin-bottom: 0;
+}
+
+.ar-ic {
+  font-size: 15px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.ar-lb {
+  font-size: 10px;
+  color: var(--tx3);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 2px;
+}
+
+.ar-v {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.ar-v.mt {
+  color: var(--tx3);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 3px;
+  background: var(--wh);
+  border: 1px solid var(--bor);
+  border-radius: 11px;
+  padding: 4px;
+  margin-bottom: 22px;
+  overflow-x: auto;
+}
+
+.tb-btn {
+  flex: 1;
+  min-width: max-content;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--tx3);
+  background: none;
+  border: none;
+  font-family: 'Sora', sans-serif;
+  transition: .2s;
+  white-space: nowrap;
+}
+
+.tb-btn.on {
+  background: var(--br);
+  color: var(--wh);
+}
+
+.tb-btn:hover:not(.on) {
+  background: var(--bg2);
+}
+
+.pane {
+  display: none;
+}
+
+.pane.on {
+  display: block;
+}
+
+.pane-lbl {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--tx3);
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  margin-bottom: 16px;
+}
+
+/* LISTING CARDS */
+.lg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+}
+
+.lc {
+  background: var(--wh);
+  border: 1px solid var(--bor);
+  border-radius: 13px;
+  overflow: hidden;
+  transition: .2s;
+}
+
+.lc:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(43, 27, 18, .1);
+}
+
+.lc-i {
+  height: 115px;
+  background: var(--bg2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  position: relative;
+}
+
+.lc-b {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  padding: 3px 9px;
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.ba {
+  background: var(--grb);
+  color: var(--gr);
+}
+
+.bs {
+  background: var(--rdb);
+  color: var(--rd);
+}
+
+.bp {
+  background: var(--amb);
+  color: var(--am);
+}
+
+.lc-info {
+  padding: 12px 13px;
+}
+
+.lc-t {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lc-p {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--br);
+}
+
+.lc-m {
+  font-size: 11px;
+  color: var(--tx3);
+  margin-top: 2px;
+}
+
+.lc-f {
+  display: flex;
+  gap: 6px;
+  padding: 0 12px 12px;
+}
+
+.lf {
+  flex: 1;
+  padding: 7px 4px;
+  border-radius: 7px;
+  border: 1px solid var(--bor);
+  background: var(--bg2);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  color: var(--tx);
+  transition: .15s;
+}
+
+.lf:hover {
+  background: var(--bg3);
+}
+
+.lf.del {
+  color: var(--rd);
+  border-color: #F0C0C0;
+}
+
+.lf.del:hover {
+  background: var(--rdb);
+}
+
+/* ACTIVITY ROWS (sold / purchases) */
+.al {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ac {
+  background: var(--wh);
+  border: 1px solid var(--bor);
+  border-radius: 13px;
+  padding: 15px 17px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: .18s;
+}
+
+.ac:hover {
+  border-color: var(--brl);
+}
+
+.ac-i {
+  width: 50px;
+  height: 50px;
+  border-radius: 11px;
+  background: var(--bg2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.ac-inf {
+  flex: 1;
+  min-width: 0;
+}
+
+.ac-t {
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ac-m {
+  font-size: 12px;
+  color: var(--tx3);
+  margin-top: 3px;
+}
+
+.ac-r {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.ac-p {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--br);
+}
+
+.ac-tag {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 9px;
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* WISHLIST */
+.wg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+}
+
+.wc {
+  background: var(--wh);
+  border: 1px solid var(--bor);
+  border-radius: 13px;
+  overflow: hidden;
+  transition: .2s;
+  cursor: pointer;
+}
+
+.wc:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(43, 27, 18, .09);
+}
+
+.wc-i {
+  height: 105px;
+  background: var(--bg2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+}
+
+.wc-b {
+  padding: 11px 13px;
+}
+
+.wc-t {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.wc-p {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--br);
+  margin-top: 2px;
+}
+
+.wc-cat {
+  font-size: 11px;
+  color: var(--tx3);
+  margin-top: 2px;
+}
+
+.wc-del {
+  width: 100%;
+  border: none;
+  background: none;
+  padding: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--rd);
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  border-top: 1px solid var(--bor);
+  transition: .15s;
+}
+
+.wc-del:hover {
+  background: var(--rdb);
+}
+
+/* EMPTY STATE */
+.empty {
+  background: var(--wh);
+  border: 1px solid var(--bor);
+  border-radius: 14px;
+  text-align: center;
+  padding: 56px 24px;
+}
+
+.ei {
+  font-size: 48px;
+  margin-bottom: 14px;
+}
+
+.empty h4 {
+  font-family: 'Lora', serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.empty p {
+  font-size: 13px;
+  color: var(--tx3);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.empty a {
+  display: inline-block;
+  background: var(--br);
+  color: var(--wh);
+  padding: 10px 24px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.empty a:hover {
+  background: var(--brd);
+}
+
+/* EDIT MODAL */
+.ov {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 8, 3, .5);
+  backdrop-filter: blur(3px);
+  z-index: 400;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ov.on {
+  display: flex;
+}
+
+.mod {
+  background: var(--wh);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .25);
+  overflow: hidden;
+  animation: modIn .25s cubic-bezier(.34, 1.4, .64, 1);
+}
+
+@keyframes modIn {
+  from {
+    transform: scale(.9) translateY(16px);
+    opacity: 0
+  }
+
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1
+  }
+}
+
+.mod-hd {
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid var(--bor);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mod-hd h2 {
+  font-family: 'Lora', serif;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.mod-x {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--tx3);
+  line-height: 1;
+}
+
+.mod-sc {
+  padding: 22px 24px;
+  max-height: 62vh;
+  overflow-y: auto;
+}
+
+.fg {
+  margin-bottom: 15px;
+}
+
+.fg label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--tx3);
+  margin-bottom: 6px;
+}
+
+.fg input,
+.fg textarea {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1px solid var(--bor);
+  border-radius: 9px;
+  font-size: 13px;
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  outline: none;
+  color: var(--tx);
+  resize: vertical;
+}
+
+.fg input:focus,
+.fg textarea:focus {
+  border-color: var(--brl);
+}
+
+.mod-ft {
+  padding: 16px 24px;
+  border-top: 1px solid var(--bor);
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%) translateY(60px);
+  background: var(--tx);
+  color: var(--wh);
+  padding: 11px 24px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  transition: .3s ease;
+  z-index: 999;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ANIMATIONS */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+.r1 {
+  animation: rise .4s .04s ease both;
+}
+
+.r2 {
+  animation: rise .4s .12s ease both;
+}
+
+.r3 {
+  animation: rise .4s .20s ease both;
+}
+
+.r4 {
+  animation: rise .4s .28s ease both;
+}
+
+/* RESPONSIVE */
+@media(max-width:700px) {
+
+  .nav,
+  .ph-wrap,
+  .pg {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .pg {
+    grid-template-columns: 1fr;
+  }
+
+  .lg,
+  .wg {
+    grid-template-columns: 1fr;
+  }
+
+  .av-float {
+    margin-top: -44px;
+  }
+
+  .av {
+    width: 88px;
+    height: 88px;
+  }
+
+  .av-l {
+    font-size: 28px;
+  }
+
+  .user-name {
+    font-size: 21px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE ENHANCEMENTS — myprofile.css
+═══════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .nav {
+    padding: 0 16px;
+    height: 54px;
+  }
+
+  .nav-logo b {
+    font-size: 16px;
+  }
+
+  .nav-r {
+    gap: 6px;
+  }
+
+  .btn {
+    padding: 7px 12px;
+    font-size: 11px;
+  }
+
+  .ph-wrap {
+    padding: 0 16px;
+  }
+
+  .band {
+    height: 140px;
+  }
+
+  .av-float {
+    margin-top: -44px;
+    margin-bottom: 12px;
+  }
+
+  .av {
+    width: 88px;
+    height: 88px;
+  }
+
+  .av-l {
+    font-size: 30px;
+  }
+
+  .user-name {
+    font-size: 22px;
+  }
+
+  .ph-name-row {
+    gap: 10px;
+    padding-bottom: 18px;
+  }
+
+  .ph-actions {
+    gap: 6px;
+  }
+
+  .pg {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .lg,
+  .wg {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tabs {
+    gap: 2px;
+    padding: 3px;
+    margin-bottom: 16px;
+  }
+
+  .tb-btn {
+    font-size: 11px;
+    padding: 8px 8px;
+  }
+
+  .lc-i {
+    height: 100px;
+    font-size: 32px;
+  }
+
+  .lc-t {
+    font-size: 12px;
+  }
+
+  .lc-p {
+    font-size: 12px;
+  }
+
+  .lf {
+    font-size: 10px;
+    padding: 6px 4px;
+  }
+
+  .ac {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .ac-i {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  .ac-t {
+    font-size: 13px;
+  }
+
+  .ac-p {
+    font-size: 13px;
+  }
+
+  .card {
+    margin-bottom: 12px;
+  }
+
+  .ch {
+    padding: 12px 14px;
+  }
+
+  .cb {
+    padding: 14px 14px;
+  }
+
+  .ar {
+    gap: 9px;
+    margin-bottom: 11px;
+  }
+
+  .ar-v {
+    font-size: 12px;
+  }
+
+  .mod {
+    max-width: calc(100vw - 24px);
+  }
+
+  .mod-sc {
+    max-height: 55vh;
+  }
+}
+
+@media (max-width: 540px) {
+  .nav-r .btn:first-child {
+    display: none;
+  }
+
+  /* hide Marketplace btn */
+  .pills {
+    gap: 5px;
+  }
+
+  .pill {
+    font-size: 10px;
+    padding: 3px 9px;
+  }
+
+  .lg,
+  .wg {
+    grid-template-columns: 1fr;
+  }
+
+  .user-name {
+    font-size: 19px;
+  }
+
+  .ph-actions .btn:first-child {
+    display: none;
+  }
+
+  /* hide Share on very small */
+  .tabs {
+    overflow-x: auto;
+  }
+
+  .tb-btn {
+    min-width: auto;
+    padding: 7px 10px;
+  }
+}
+
+/* Mobile nav overflow fix */
+@media (max-width: 540px) {
+  .nav {
+    gap: 6px;
+    padding: 0 12px;
+  }
+
+  .nav-r {
+    gap: 5px;
+    overflow-x: auto;
+    flex-shrink: 0;
+  }
+
+  .nav-r .btn {
+    white-space: nowrap;
+    min-height: 36px;
+  }
+
+  /* Ensure tap targets ≥44px */
+  .tb-btn {
+    min-height: 40px;
+  }
+
+  .lf,
+  .wc-del {
+    min-height: 36px;
+  }
+
+  /* Profile grid single col */
+  .lg {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+
+<!-- NAV -->
+  <nav class="nav">
+    <a href="/marketplace" class="nav-logo">
+      <b>StudXchange</b>
+      <small>Academic Marketplace</small>
+    </a>
+    <div class="nav-r">
+      <button class="btn btn-g" onclick="location.href='/marketplace'">← Marketplace</button>
+      <button class="btn btn-m" onclick="openEdit()">✏️ Edit Profile</button>
+      <button class="btn btn-d" onclick="signOut()">Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- BANNER -->
+  <div class="band"></div>
+
+  <!-- PROFILE HEADER -->
+  <div class="ph-wrap">
+    <div class="av-float r1">
+      <div class="av">
+        <span class="av-l" id="avL">?</span>
+      </div>
+    </div>
+    <div class="ph-name-row r1">
+      <div>
+        <div class="user-name" id="dispName">—</div>
+        <div class="pills">
+          <span class="pill">🎓 <span id="pCollege">Student</span></span>
+          <span class="pill">📍 <span id="pLoc">—</span></span>
+          <span class="pill" style="color:var(--gr);border-color:#C0DEC8;">✅ Verified</span>
+        </div>
+      </div>
+      <div class="ph-actions">
+        <button class="btn btn-g" onclick="doShare()">🔗 Share</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="pg">
+
+    <!-- SIDEBAR -->
+    <aside class="r3">
+      <div class="card">
+        <div class="ch">
+          <h3>About Me</h3>
+          <span class="che" onclick="openEdit()">Edit ✏️</span>
+        </div>
+        <div class="cb">
+          <div class="ar">
+            <div class="ar-ic">👤</div>
+            <div>
+              <div class="ar-lb">Name</div>
+              <div class="ar-v" id="abN">—</div>
+            </div>
+          </div>
+          <div class="ar">
+            <div class="ar-ic">📧</div>
+            <div>
+              <div class="ar-lb">Email</div>
+              <div class="ar-v" id="abE">—</div>
+            </div>
+          </div>
+          <div class="ar">
+            <div class="ar-ic">📞</div>
+            <div>
+              <div class="ar-lb">Phone</div>
+              <div class="ar-v" id="abPh">—</div>
+            </div>
+          </div>
+          <div class="ar">
+            <div class="ar-ic">🎓</div>
+            <div>
+              <div class="ar-lb">College</div>
+              <div class="ar-v" id="abC">—</div>
+            </div>
+          </div>
+          <div class="ar">
+            <div class="ar-ic">📚</div>
+            <div>
+              <div class="ar-lb">Course & Year</div>
+              <div class="ar-v" id="abCo">—</div>
+            </div>
+          </div>
+          <div class="ar">
+            <div class="ar-ic">📍</div>
+            <div>
+              <div class="ar-lb">Location</div>
+              <div class="ar-v" id="abL">—</div>
+            </div>
+          </div>
+          <div class="ar">
+            <div class="ar-ic">💬</div>
+            <div>
+              <div class="ar-lb">Bio</div>
+              <div class="ar-v" id="abB" style="line-height:1.55">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="r4">
+      <div class="tabs">
+        <button class="tb-btn on" onclick="goTab('listings',this)">📦 My Listings</button>
+        <button class="tb-btn" onclick="goTab('requests',this)">💬 Requests</button>
+        <button class="tb-btn" onclick="goTab('wishlist',this)">♡ Wishlist</button>
+      </div>
+
+      <div class="pane on" id="pane-listings">
+        <div class="pane-lbl">Items you listed for sale or rent</div>
+        <div id="r-listings"></div>
+      </div>
+
+      <div class="pane" id="pane-requests">
+        <div class="pane-lbl">Chat Requests</div>
+        <div id="requestContainer"></div>
+      </div>
+
+      <div class="pane" id="pane-wishlist">
+        <div class="pane-lbl">Your saved items</div>
+        <div id="r-wishlist"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ── EDIT PROFILE MODAL ─────────────────────────────────────────────── -->
+  <div class="ov" id="editModal" onclick="if(event.target===this)closeEdit()">
+    <div class="mod">
+      <div class="mod-hd">
+        <h2>Edit Profile</h2>
+        <button class="mod-x" onclick="closeEdit()">×</button>
+      </div>
+      <div class="mod-sc">
+        <div class="fg"><label>Full Name</label><input id="fName" placeholder="e.g. Riya Sharma"></div>
+        <div class="fg"><label>Email</label><input id="fEmail" type="email" placeholder="you@vcet.edu.in"></div>
+        <div class="fg"><label>Phone</label><input id="fPhone" type="tel" placeholder="+91 98765 43210"></div>
+        <div class="fg"><label>College / University</label><input id="fCollege" placeholder="e.g. VCET Pune"></div>
+        <div class="fg"><label>Course & Year</label><input id="fCourse" placeholder="e.g. B.Tech CSE — 3rd Year"></div>
+        <div class="fg"><label>Location</label><input id="fLoc" placeholder="e.g. Pune, Maharashtra"></div>
+        <div class="fg"><label>Bio</label><textarea id="fBio" rows="3"
+            placeholder="Tell others a little about yourself…"></textarea></div>
+      </div>
+      <div class="mod-ft">
+        <button class="btn btn-g" onclick="closeEdit()">Cancel</button>
+        <button class="btn btn-m" onclick="saveProfile()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EDIT LISTING MODAL ─────────────────────────────────────────────── -->
+  <div class="ov" id="editListingModal" onclick="if(event.target===this)closeEditListing()">
+    <div class="mod">
+      <div class="mod-hd">
+        <h2>Edit Listing</h2>
+        <button class="mod-x" onclick="closeEditListing()">×</button>
+      </div>
+      <div class="mod-sc">
+        <div class="fg">
+          <label>Title</label>
+          <input id="editItemTitle" placeholder="Item title">
+        </div>
+        <div class="fg">
+          <label>Category</label>
+          <input id="editItemCategory" placeholder="e.g. Books, Electronics">
+        </div>
+        <div class="fg">
+          <label>Description</label>
+          <textarea id="editItemDescription" rows="3" placeholder="Describe the item…"></textarea>
+        </div>
+        <div class="fg">
+          <label>Contact</label>
+          <input id="editItemContact" placeholder="Phone or WhatsApp number">
+        </div>
+
+        <!-- Sale fields -->
+        <div class="fg" id="editItemPriceWrap">
+          <label>Price (₹)</label>
+          <input id="editItemPrice" type="number" placeholder="e.g. 500">
+        </div>
+        <div class="fg" id="editItemConditionWrap">
+          <label>Condition</label>
+          <input id="editItemCondition" placeholder="e.g. Like New, Good, Fair">
+        </div>
+
+        <!-- Rent fields -->
+        <div class="fg" id="editItemRentWrap" style="display:none">
+          <label>Rent Per Day (₹)</label>
+          <input id="editItemRent" type="number" placeholder="e.g. 50">
+        </div>
+        <div class="fg" id="editItemDepositWrap" style="display:none">
+          <label>Security Deposit (₹)</label>
+          <input id="editItemDeposit" type="number" placeholder="e.g. 200">
+        </div>
+
+        <div class="fg">
+          <label>Image URL</label>
+          <input id="editItemImage" placeholder="https://…">
+        </div>
+      </div>
+      <div class="mod-ft">
+        <button class="btn btn-g" onclick="closeEditListing()">Cancel</button>
+        <button class="btn btn-m" onclick="saveEditedItem()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+const user = JSON.parse(localStorage.getItem("user"));
+if (!user) { alert("Please login first"); window.location.href = "/login"; }
+
+const $      = id => document.getElementById(id);
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function getInitials(name) {
+  return (name || '').trim().split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0, 2) || '?';
+}
+
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+}
+
+// ── Profile Data ──────────────────────────────────────────────────────────────
+const ext = JSON.parse(localStorage.getItem('studxchange_profile') || '{}');
+const P = {
+  name:    ext.name    || user.name  || '',
+  email:   ext.email   || user.email || '',
+  phone:   ext.phone   || '',
+  college: ext.college || '',
+  course:  ext.course  || '',
+  loc:     ext.loc     || '',
+  bio:     ext.bio     || '',
+};
+
+// ── Render Profile ────────────────────────────────────────────────────────────
+function renderProfile() {
+  $('avL').textContent      = getInitials(P.name);
+  $('dispName').textContent = P.name    || 'Your Name';
+  $('pCollege').textContent = P.college || 'Student';
+  $('pLoc').textContent     = P.loc     || '—';
+  $('abN').textContent  = P.name    || '—';
+  $('abE').textContent  = P.email   || '—';
+  $('abPh').textContent = P.phone   || '—';
+  $('abC').textContent  = P.college || '—';
+  $('abCo').textContent = P.course  || '—';
+  $('abL').textContent  = P.loc     || '—';
+  $('abB').textContent  = P.bio     || '—';
+}
+
+// ── Profile Edit Modal ────────────────────────────────────────────────────────
+function openEdit() {
+  $('fName').value    = P.name;
+  $('fEmail').value   = P.email;
+  $('fPhone').value   = P.phone;
+  $('fCollege').value = P.college;
+  $('fCourse').value  = P.course;
+  $('fLoc').value     = P.loc;
+  $('fBio').value     = P.bio;
+  $('editModal').classList.add('on');
+}
+function closeEdit() { $('editModal').classList.remove('on'); }
+
+function saveProfile() {
+  P.name    = $('fName').value.trim()    || P.name;
+  P.email   = $('fEmail').value.trim()   || P.email;
+  P.phone   = $('fPhone').value.trim();
+  P.college = $('fCollege').value.trim();
+  P.course  = $('fCourse').value.trim();
+  P.loc     = $('fLoc').value.trim();
+  P.bio     = $('fBio').value.trim();
+  localStorage.setItem('studxchange_profile', JSON.stringify(P));
+  closeEdit();
+  renderProfile();
+  toast('Profile saved ✓');
+}
+
+// ── Sign Out ──────────────────────────────────────────────────────────────────
+function signOut() {
+  localStorage.removeItem('user');
+  localStorage.removeItem('studxchange_profile');
+  window.location.href = '/login';
+}
+
+function doShare() {
+  if (navigator.share) navigator.share({ title: P.name + "'s Profile", url: location.href });
+  else { navigator.clipboard.writeText(location.href); toast('Link copied 🔗'); }
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+function goTab(id, el) {
+  document.querySelectorAll('.tb-btn').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+  $('pane-' + id).classList.add('on');
+  if (id === 'listings')  loadMyListings();
+  if (id === 'requests')  loadRequests();
+  if (id === 'wishlist')  loadWishlist();
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  MY LISTINGS
+// ══════════════════════════════════════════════════════════════════════════════
+async function loadMyListings() {
+  try {
+    const res  = await fetch(`/my-listings/${getUserId(user)}`);
+    const data = await res.json();
+    const container = $('r-listings');
+
+    if (!data.length) {
+      container.innerHTML = `
+        <div class="empty">
+          <div class="ei">📦</div>
+          <h4>No listings yet</h4>
+          <p>List your first item!</p>
+          <a href="/sell">Sell an Item</a>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = data.map(item => {
+      const isProduct  = item.item_type === 'product';
+      const priceLabel = isProduct
+        ? `₹${Number(item.price || 0).toLocaleString('en-IN')}`
+        : `₹${item.rent_per_day}/day`;
+      const badge = isProduct ? '🛍️ Sale' : '🔄 Rent';
+
+      return `
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;
+                    border:1px solid #e2d3c3;border-radius:12px;margin-bottom:10px;background:#fff;">
+          <img src="${item.image || 'https://via.placeholder.com/80'}"
+               style="width:80px;height:80px;object-fit:cover;border-radius:8px;flex-shrink:0;"
+               onerror="this.src='https://via.placeholder.com/80'">
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:11px;color:#9C7B66;margin-bottom:2px;">${badge}</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.title}</div>
+            <div style="color:#7B4B2A;font-weight:600;margin-bottom:4px;">${priceLabel}</div>
+            <div style="font-size:12px;color:#9C7B66;">${item.category || '—'}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
+            <button onclick='openEditItem(${JSON.stringify(item).replace(/'/g,"&#39;")})'
+                    style="padding:6px 12px;border:1px solid #e2d3c3;background:#f7f3ee;
+                           border-radius:8px;cursor:pointer;font-size:12px;">✏️ Edit</button>
+            <button onclick="deleteItem('${item._id||item.id}','${item.item_type}')"
+                    style="padding:6px 12px;border:1px solid #fca5a5;background:#fef2f2;
+                           color:#dc2626;border-radius:8px;cursor:pointer;font-size:12px;">🗑 Delete</button>
+          </div>
+        </div>`;
+    }).join('');
+  } catch (err) { console.error("Error loading listings:", err); }
+}
+
+async function deleteItem(id, type) {
+  if (!confirm("Delete this listing?")) return;
+  const url = type === 'rent'
+    ? `/delete-rent/${id}/${getUserId(user)}`
+    : `/delete-product/${id}/${getUserId(user)}`;
+  try {
+    const res  = await fetch(url, { method: "DELETE", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() } });
+    const data = await res.json();
+    if (data.success) { toast("Deleted ✓"); loadMyListings(); }
+    else toast("Delete failed");
+  } catch { toast("Delete failed"); }
+}
+
+// ── Edit Listing Modal ────────────────────────────────────────────────────────
+let currentEditingItem = null;
+
+function openEditItem(item) {
+  currentEditingItem = item;
+  $("editItemTitle").value       = item.title       || "";
+  $("editItemCategory").value    = item.category    || "";
+  $("editItemDescription").value = item.description || "";
+  $("editItemContact").value     = item.contact     || "";
+  $("editItemImage").value       = item.image       || "";
+
+  if (item.item_type === "product") {
+    $("editItemPriceWrap").style.display     = "block";
+    $("editItemConditionWrap").style.display = "block";
+    $("editItemRentWrap").style.display      = "none";
+    $("editItemDepositWrap").style.display   = "none";
+    $("editItemPrice").value     = item.price          || "";
+    $("editItemCondition").value = item.condition_type || "";
+  } else {
+    $("editItemPriceWrap").style.display     = "none";
+    $("editItemConditionWrap").style.display = "none";
+    $("editItemRentWrap").style.display      = "block";
+    $("editItemDepositWrap").style.display   = "block";
+    $("editItemRent").value    = item.rent_per_day || "";
+    $("editItemDeposit").value = item.deposit      || "";
+  }
+  $("editListingModal").classList.add("on");
+}
+
+function closeEditListing() {
+  $("editListingModal").classList.remove("on");
+  currentEditingItem = null;
+}
+
+async function saveEditedItem() {
+  if (!currentEditingItem) return;
+  const payload = {
+    title:       $("editItemTitle").value.trim(),
+    category:    $("editItemCategory").value.trim(),
+    description: $("editItemDescription").value.trim(),
+    contact:     $("editItemContact").value.trim(),
+    image:       $("editItemImage").value.trim(),
+    seller_id:   getUserId(user)
+  };
+  let url = "";
+  if (currentEditingItem.item_type === "product") {
+    url = `/update-product/${currentEditingItem.id}`;
+    payload.price          = $("editItemPrice").value.trim();
+    payload.condition_type = $("editItemCondition").value.trim();
+  } else {
+    url = `/update-rent/${currentEditingItem.id}`;
+    payload.rent_per_day = $("editItemRent").value.trim();
+    payload.deposit      = $("editItemDeposit").value.trim();
+  }
+  try {
+    const res  = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (data.success) { toast("Updated ✓"); closeEditListing(); loadMyListings(); }
+    else toast("Update failed");
+  } catch { toast("Update failed"); }
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  REQUESTS TAB — shows both buy chat requests AND rent requests
+// ══════════════════════════════════════════════════════════════════════════════
+async function loadRequests() {
+  const container = $('requestContainer');
+  container.innerHTML = `<div style="padding:20px;text-align:center;color:#9C7B66;">Loading…</div>`;
+
+  try {
+    // Fetch both in parallel
+    const [chatRes, rentRes] = await Promise.all([
+      fetch(`/get-requests/${getUserId(user)}`),
+      fetch(`/my-rent-requests/${getUserId(user)}`)
+    ]);
+
+    const chatRequests = await chatRes.json();
+    const rentRequests = await rentRes.json();
+
+    // Separate buy vs rent from chat_requests
+    // (rent ones are also in rentRequests — we render them from rentRequests for richer data)
+    const buyRequests = chatRequests.filter(r =>
+      (r.request_type || 'buy') === 'buy'
+    );
+
+    if (!buyRequests.length && !rentRequests.length) {
+      container.innerHTML = `
+        <div class="empty">
+          <div class="ei">💬</div>
+          <h4>No requests yet</h4>
+          <p>When buyers or renters contact you, their requests will appear here.</p>
+        </div>`;
+      return;
+    }
+
+    let html = '';
+
+    // ── RENT REQUESTS ────────────────────────────────────────────────────────
+    if (rentRequests.length) {
+      html += `<div style="font-size:12px;font-weight:700;color:#9C7B66;letter-spacing:.05em;
+                            text-transform:uppercase;margin:0 0 10px;">🔄 Rent Requests</div>`;
+
+      html += rentRequests.map(r => {
+        const statusColor = r.status === 'accepted' ? '#276840' :
+                            r.status === 'rejected' ? '#dc2626' : '#b45309';
+        const statusLabel = r.status.charAt(0).toUpperCase() + r.status.slice(1);
+
+        return `
+          <div style="padding:16px;border:1px solid #d4e8d4;border-radius:12px;
+                      margin-bottom:12px;background:#f6fbf6;">
+
+            <!-- Item info -->
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;">
+              <img src="${r.item_image || 'https://via.placeholder.com/56'}"
+                   style="width:56px;height:56px;object-fit:cover;border-radius:8px;flex-shrink:0;"
+                   onerror="this.src='https://via.placeholder.com/56'">
+              <div>
+                <div style="font-size:12px;color:#276840;font-weight:600;margin-bottom:2px;">🔄 Rent Request</div>
+                <div style="font-weight:700;font-size:14px;">${r.item_title}</div>
+                <div style="font-size:12px;color:#6B4838;margin-top:2px;">
+                  👤 From: <b>${r.renter_name}</b> &nbsp;·&nbsp; 📧 ${r.renter_email}
+                </div>
+              </div>
+            </div>
+
+            <!-- Rental details -->
+            <div style="background:#fff;border-radius:8px;padding:10px 12px;margin-bottom:10px;
+                        border:1px solid #C0DEC8;display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+              <div><div style="font-size:11px;color:#9C7B66;">Start Date</div>
+                   <div style="font-weight:600;font-size:13px;">${fmtDate(r.start_date)}</div></div>
+              <div><div style="font-size:11px;color:#9C7B66;">End Date</div>
+                   <div style="font-weight:600;font-size:13px;">${fmtDate(r.end_date)}</div></div>
+              <div><div style="font-size:11px;color:#9C7B66;">Total Cost</div>
+                   <div style="font-weight:700;font-size:14px;color:#276840;">₹${r.total_cost}</div></div>
+              <div><div style="font-size:11px;color:#9C7B66;">Rate</div>
+                   <div style="font-weight:600;font-size:13px;">₹${r.rent_per_day}/day</div></div>
+            </div>
+
+            ${r.message ? `
+              <div style="background:#fffbf0;border:1px solid #fde68a;border-radius:8px;
+                          padding:8px 12px;margin-bottom:10px;font-size:13px;">
+                💬 "${r.message}"
+              </div>` : ''}
+
+            <!-- Status -->
+            <div style="font-size:12px;margin-bottom:10px;">
+              Status: <span style="font-weight:700;color:${statusColor};">${statusLabel}</span>
+            </div>
+
+            <!-- Actions -->
+            ${r.status === 'pending' ? `
+              <div style="display:flex;gap:8px;">
+                <button onclick="acceptRentRequest('${r._id||r.id}')"
+                        style="flex:1;padding:9px;background:#276840;color:#fff;border:none;
+                               border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">
+                  ✅ Accept & Open Chat
+                </button>
+                <button onclick="rejectRentRequest('${r._id||r.id}')"
+                        style="flex:1;padding:9px;background:#fef2f2;color:#dc2626;
+                               border:1px solid #fca5a5;border-radius:8px;cursor:pointer;
+                               font-size:13px;font-weight:600;">
+                  ✕ Reject
+                </button>
+              </div>` : ''}
+
+            ${r.status === 'accepted' && r.chat_request_id ? `
+              <button onclick="openChat('${r.chat_request_id}')"
+                      style="width:100%;padding:9px;background:#7B4B2A;color:#fff;border:none;
+                             border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">
+                💬 Open Chat with Renter
+              </button>` : ''}
+
+            ${r.status === 'rejected' ? `
+              <div style="padding:9px;background:#fef2f2;border-radius:8px;text-align:center;
+                          font-size:13px;color:#dc2626;font-weight:600;">
+                ❌ Request Rejected
+              </div>` : ''}
+          </div>`;
+      }).join('');
+    }
+
+    // ── BUY CHAT REQUESTS ────────────────────────────────────────────────────
+    if (buyRequests.length) {
+      html += `<div style="font-size:12px;font-weight:700;color:#9C7B66;letter-spacing:.05em;
+                            text-transform:uppercase;margin:${rentRequests.length ? '20px' : '0'} 0 10px;">
+                 🛍️ Buy Requests</div>`;
+
+      html += buyRequests.map(r => {
+        const statusColor = r.status === 'accepted' ? '#276840' :
+                            r.status === 'rejected' ? '#dc2626' : '#b45309';
+        const statusLabel = r.status.charAt(0).toUpperCase() + r.status.slice(1);
+
+        return `
+          <div style="padding:14px;border:1px solid #e2d3c3;border-radius:12px;
+                      margin-bottom:10px;background:#fff;">
+            ${r.product_image ? `
+              <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;">
+                <img src="${r.product_image}"
+                     style="width:48px;height:48px;object-fit:cover;border-radius:8px;"
+                     onerror="this.style.display='none'">
+                <div>
+                  <div style="font-weight:700;font-size:14px;">${r.product_title}</div>
+                  <div style="font-size:12px;color:#6B4838;">👤 <b>${r.buyer_name}</b></div>
+                </div>
+              </div>` : `
+              <div style="font-weight:700;font-size:14px;margin-bottom:4px;">📦 ${r.product_title}</div>
+              <div style="font-size:13px;color:#6B4838;margin-bottom:8px;">👤 Buyer: <b>${r.buyer_name}</b></div>`}
+
+            <div style="font-size:12px;margin-bottom:10px;">
+              Status: <span style="font-weight:600;color:${statusColor};">${statusLabel}</span>
+            </div>
+
+            ${r.status === 'pending' ? `
+              <div style="display:flex;gap:8px;">
+                <button onclick="acceptRequest('${r._id||r.id}')"
+                        style="flex:1;padding:8px;background:#276840;color:#fff;border:none;
+                               border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">
+                  ✅ Accept
+                </button>
+                <button onclick="rejectRequest('${r._id||r.id}')"
+                        style="flex:1;padding:8px;background:#fef2f2;color:#dc2626;
+                               border:1px solid #fca5a5;border-radius:8px;cursor:pointer;
+                               font-size:13px;font-weight:600;">
+                  ✕ Reject
+                </button>
+              </div>` : ''}
+
+            ${r.status === 'accepted' ? `
+              <button onclick="openChat('${r._id||r.id}')"
+                      style="width:100%;padding:8px;background:#7B4B2A;color:#fff;border:none;
+                             border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">
+                💬 Open Chat
+              </button>` : ''}
+          </div>`;
+      }).join('');
+    }
+
+    container.innerHTML = html;
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = `<p style="padding:20px;color:#9C7B66;">Failed to load requests.</p>`;
+  }
+}
+
+// Accept rent request → updates both rent_requests + chat_requests → enables chat
+async function acceptRentRequest(rentRequestId) {
+  try {
+    const res  = await fetch(`/accept-rent-request`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() },
+      body: JSON.stringify({ rent_request_id: rentRequestId })
+    });
+    const data = await res.json();
+    if (data.success) {
+      toast("Rent request accepted! ✅ Chat is now open.");
+      loadRequests();
+      // Auto-open chat if we have the chat_request_id
+      if (data.chat_request_id) {
+        setTimeout(() => openChat(data.chat_request_id), 1000);
+      }
+    } else {
+      toast(data.error || "Could not accept request");
+    }
+  } catch { toast("Server error"); }
+}
+
+async function rejectRentRequest(rentRequestId) {
+  if (!confirm("Reject this rent request?")) return;
+  try {
+    const res  = await fetch(`/reject-rent-request`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() },
+      body: JSON.stringify({ rent_request_id: rentRequestId })
+    });
+    const data = await res.json();
+    if (data.success) { toast("Rent request rejected"); loadRequests(); }
+    else toast(data.error || "Could not reject request");
+  } catch { toast("Server error"); }
+}
+
+// Accept buy chat request
+function acceptRequest(id) {
+  fetch(`/accept-chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() },
+    body: JSON.stringify({ request_id: id })
+  }).then(() => { toast("Request accepted ✅"); loadRequests(); });
+}
+
+function rejectRequest(id) {
+  fetch(`/reject-chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() },
+    body: JSON.stringify({ request_id: id })
+  }).then(() => { toast("Request rejected"); loadRequests(); });
+}
+
+function openChat(request_id) {
+  window.location.href = `/chat?request_id=${request_id}`;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  WISHLIST
+// ══════════════════════════════════════════════════════════════════════════════
+async function loadWishlist() {
+  try {
+    const res   = await fetch(`/wishlist/${getUserId(user)}`);
+    const items = await res.json();
+    const container = $("r-wishlist");
+
+    if (!items.length) {
+      container.innerHTML = `
+        <div class="empty">
+          <div class="ei">♡</div>
+          <h4>Nothing saved</h4>
+          <p>Tap ♡ on any item to save it here.</p>
+          <a href="/marketplace">Browse Marketplace</a>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = items.map(item => {
+      const priceLabel = item.item_type === 'product'
+        ? `₹${Number(item.price || 0).toLocaleString('en-IN')}`
+        : `₹${item.rent_per_day}/day • Deposit ₹${item.deposit || 0}`;
+      const badge = item.item_type === 'product' ? '🛍️ Sale' : '🔄 Rent';
+
+      return `
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;
+                    border:1px solid #e2d3c3;border-radius:12px;margin-bottom:10px;background:#fff;">
+          <img src="${item.image || 'https://via.placeholder.com/80'}"
+               style="width:80px;height:80px;object-fit:cover;border-radius:8px;flex-shrink:0;"
+               onerror="this.src='https://via.placeholder.com/80'">
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:11px;color:#9C7B66;margin-bottom:2px;">${badge}</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px;">${item.title}</div>
+            <div style="color:#7B4B2A;font-weight:600;margin-bottom:4px;">${priceLabel}</div>
+            <div style="font-size:12px;color:#9C7B66;">${item.category || '—'}</div>
+          </div>
+          <button onclick="removeWishlist('${item.item_id}','${item.item_type}')"
+                  style="padding:6px 12px;border:1px solid #fca5a5;background:#fef2f2;color:#dc2626;
+                         border-radius:8px;cursor:pointer;font-size:12px;flex-shrink:0;">
+            ✕ Remove
+          </button>
+        </div>`;
+    }).join('');
+  } catch (err) {
+    console.error(err);
+    $("r-wishlist").innerHTML = "<p style='padding:20px;color:#9C7B66;'>Failed to load wishlist.</p>";
+  }
+}
+
+async function removeWishlist(itemId, itemType) {
+  try {
+    const res  = await fetch(`/wishlist`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() },
+      body: JSON.stringify({ user_id: getUserId(user), item_id: itemId, item_type: itemType })
+    });
+    const data = await res.json();
+    if (data.success) { toast("Removed from wishlist"); loadWishlist(); }
+    else toast("Could not remove item");
+  } catch { toast("Remove failed"); }
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+renderProfile();
+loadMyListings();
+</script>
+
+<%- include('../partials/foot') %>

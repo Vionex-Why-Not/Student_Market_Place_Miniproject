@@ -1,0 +1,460 @@
+<%- include('../partials/head', { title, headExtras: '', extraScript: '' }) %>
+<style>
+/* rent.css — teal theme */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #0D9488;
+  --primary-dark: #0F766E;
+  --primary-light: #5EEAD4;
+  --primary-border: #99F6E4;
+  --bg-main: #F0FDFA;
+  --bg-soft: #CCFBF1;
+  --text-dark: #0F2E2B;
+  --text-mid: #2D7A73;
+  --border-soft: #A7F3D0;
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #5EEAD4 0%, #0D9488 50%, #134E4A 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.page-wrap {
+  width: 100%;
+  max-width: 860px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, .8);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  transition: .2s;
+}
+
+.back-btn:hover {
+  color: #fff;
+  transform: translateX(-3px);
+}
+
+.sell-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 32px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, .22);
+  animation: slideUp .4s cubic-bezier(.34, 1.2, .64, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.card-header-icon {
+  font-size: 32px;
+}
+
+.card-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.card-header p {
+  font-size: 13px;
+  color: var(--text-mid);
+  margin-top: 3px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.full {
+  grid-column: 1/-1;
+}
+
+label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--text-mid);
+  margin-bottom: 7px;
+  display: block;
+}
+
+.req {
+  color: #e74c3c;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-soft);
+  background: var(--bg-soft);
+  font-size: 13px;
+  font-family: 'Sora', sans-serif;
+  color: var(--text-dark);
+  transition: .2s;
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, .12);
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.upload {
+  border: 2px dashed var(--primary-light);
+  border-radius: 14px;
+  background: var(--bg-soft);
+  cursor: pointer;
+  transition: .3s;
+  overflow: hidden;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload:hover {
+  background: #fff;
+  border-color: var(--primary);
+}
+
+.upload input {
+  display: none;
+}
+
+.upload-inner {
+  text-align: center;
+  padding: 24px;
+}
+
+.upload-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.upload-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-mid);
+}
+
+.upload-hint {
+  font-size: 11px;
+  color: var(--primary-light);
+  margin-top: 4px;
+}
+
+.preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px;
+  justify-content: center;
+}
+
+.preview img {
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .12);
+}
+
+.post-btn {
+  margin-top: 26px;
+  width: 100%;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Sora', sans-serif;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  cursor: pointer;
+  transition: .3s;
+  box-shadow: 0 6px 20px rgba(13, 148, 136, .35);
+}
+
+.post-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(13, 148, 136, .45);
+}
+
+.post-btn:disabled {
+  opacity: .7;
+  cursor: not-allowed;
+}
+
+@media(max-width:700px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sell-card {
+    padding: 20px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE ENHANCEMENTS — rent.css
+═══════════════════════════════════════════ */
+@media (max-width: 700px) {
+  body {
+    padding: 20px 12px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .sell-card {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .back-btn {
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+
+  .card-header {
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+  }
+
+  .card-header-icon {
+    font-size: 26px;
+  }
+
+  .card-header h2 {
+    font-size: 17px;
+  }
+
+  .card-header p {
+    font-size: 12px;
+  }
+
+  label {
+    font-size: 10px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+
+  .upload {
+    min-height: 100px;
+  }
+
+  .upload-inner {
+    padding: 18px;
+  }
+
+  .upload-icon {
+    font-size: 26px;
+  }
+
+  .preview img {
+    width: 100px;
+    height: 75px;
+  }
+
+  .post-btn {
+    padding: 13px;
+    font-size: 14px;
+    margin-top: 20px;
+  }
+}
+</style>
+
+<div class="page-wrap">
+    <a href="/rentpage" class="back-btn">← Back to Rentals</a>
+
+    <div class="sell-card">
+      <div class="card-header">
+        <div class="card-header-icon">🔄</div>
+        <div>
+          <h2>List Item for Rent</h2>
+          <p>Set your daily rate and let students borrow from you</p>
+        </div>
+      </div>
+
+      <form id="rentForm">
+        <div class="form-grid">
+
+          <div class="full">
+            <label>Upload Photo</label>
+            <div class="upload" id="uploadZone" onclick="document.getElementById('photo').click()">
+              <div class="upload-inner" id="uploadInner">
+                <div class="upload-icon">📷</div>
+                <div class="upload-text">Click to upload image</div>
+                <div class="upload-hint">JPG, PNG up to 5MB</div>
+              </div>
+              <input type="file" id="photo" accept="image/*" onchange="previewImage(event)">
+              <div class="preview" id="preview"></div>
+            </div>
+          </div>
+
+          <div>
+            <label>Title <span class="req">*</span></label>
+            <input type="text" id="title" placeholder="e.g. Mountain Bike, Calculator" required>
+          </div>
+
+          <div>
+            <label>Category</label>
+            <select id="category">
+              <option>Books</option>
+              <option>Laptops</option>
+              <option>Electronics</option>
+              <option>Bikes</option>
+              <option>Furniture</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Rent per Day (₹) <span class="req">*</span></label>
+            <input type="number" id="rent_day" placeholder="e.g. 50" required>
+          </div>
+
+          <div>
+            <label>Security Deposit (₹)</label>
+            <input type="number" id="deposit" placeholder="e.g. 200 (refundable)">
+          </div>
+
+          <div class="full">
+            <label>Description</label>
+            <textarea id="description"
+              placeholder="Describe the item — condition, accessories included, pickup location…"></textarea>
+          </div>
+
+          <div>
+            <label>Contact Number</label>
+            <input type="tel" id="contact" placeholder="+91 98765 43210">
+          </div>
+
+        </div>
+
+        <button type="submit" class="post-btn" id="postBtn">
+          <span id="btnText">🔄 Post for Rent</span>
+          <span id="btnLoader" style="display:none">Posting…</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+<script>
+(function() {
+  var user = getUser();
+  if (!user || !getUserId(user)) { requireLogin(); return; }
+
+  var photoFile = null;
+
+  window.previewImage = function(event) {
+    var file = event.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { toast("Image must be under 5 MB"); event.target.value = ""; return; }
+    photoFile = file;
+    document.getElementById("uploadInner").style.display = "none";
+    var prev = document.getElementById("preview");
+    prev.innerHTML = "";
+    var img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    prev.appendChild(img);
+  };
+
+  document.getElementById("rentForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    var title    = document.getElementById("title").value.trim();
+    var rent_day = document.getElementById("rent_day").value;
+    if (!title || !rent_day) { toast("Please fill required fields"); return; }
+
+    var btn = document.getElementById("postBtn");
+    btn.disabled = true;
+    document.getElementById("btnText").style.display   = "none";
+    document.getElementById("btnLoader").style.display = "inline";
+
+    var fd = new FormData();
+    fd.append("title",        title);
+    fd.append("category",     document.getElementById("category").value);
+    fd.append("description",  document.getElementById("description").value);
+    fd.append("contact",      document.getElementById("contact").value);
+    fd.append("rent_per_day", rent_day);
+    fd.append("deposit",      document.getElementById("deposit").value || "0");
+    if (photoFile) fd.append("image", photoFile);
+
+    try {
+      var r = await fetch("/add-rent", {
+        method: "POST",
+        headers: { "Authorization": "Bearer " + getToken() },
+        body: fd
+      });
+      var d = await r.json();
+      if (d.success) { toast("Item listed for rent! 🚀"); setTimeout(function(){ location.href = "/rentpage"; }, 1200); }
+      else { toast("Error: " + (d.error || "Unknown")); }
+    } catch(err) { toast("Server error — please try again"); }
+
+    btn.disabled = false;
+    document.getElementById("btnText").style.display   = "inline";
+    document.getElementById("btnLoader").style.display = "none";
+  });
+})();
+</script>
+
+<%- include('../partials/foot') %>

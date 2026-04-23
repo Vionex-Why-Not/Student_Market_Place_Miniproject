@@ -1,0 +1,646 @@
+<%- include('../partials/head', { title, headExtras: '', extraScript: '' }) %>
+<style>
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
+
+:root {
+  --br: #7B4B2A;
+  --brd: #5A361D;
+  --brl: #C9A27A;
+  --brp: #F0E4D6;
+  --bg: #F7F3EE;
+  --bg2: #EFE6DB;
+  --bg3: #E5D8C8;
+  --bor: #DDD0C0;
+  --tx: #231209;
+  --tx2: #6B4838;
+  --tx3: #9C7B66;
+  --wh: #FFFFFF;
+  --gr: #276840;
+  --grb: #E8F5ED;
+  --rd: #B83232;
+  --rdb: #FDEAEA;
+  --am: #A06B10;
+  --amb: #FEF3DC;
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--tx);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  -webkit-font-smoothing: antialiased
+}
+
+/* BG decoration */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #D4A574 0%, var(--br) 55%, #3A1E0C 100%);
+  opacity: .08;
+  pointer-events: none
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(201, 162, 122, .18), transparent 70%);
+  pointer-events: none
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 440px;
+  position: relative
+}
+
+/* Logo */
+.logo {
+  text-align: center;
+  margin-bottom: 32px
+}
+
+.logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, var(--brl), var(--brd));
+  border-radius: 14px;
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  font-family: 'Lora', serif;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 24px rgba(123, 75, 42, .3)
+}
+
+.logo h1 {
+  font-family: 'Lora', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--br)
+}
+
+.logo p {
+  font-size: 12px;
+  color: var(--tx3);
+  margin-top: 3px
+}
+
+/* Card */
+.card {
+  background: var(--wh);
+  border: 1.5px solid var(--bor);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(123, 75, 42, .14)
+}
+
+.card-header {
+  background: linear-gradient(130deg, var(--br), var(--brd));
+  padding: 24px 28px 20px;
+  color: #fff
+}
+
+.card-header h2 {
+  font-family: 'Lora', serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px
+}
+
+.card-header p {
+  font-size: 12px;
+  opacity: .75
+}
+
+.admin-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, .2);
+  border: 1px solid rgba(255, 255, 255, .3);
+  padding: 3px 12px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 10px
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--bor)
+}
+
+.tab {
+  flex: 1;
+  padding: 13px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--tx3);
+  transition: .18s;
+  border: none;
+  background: none;
+  font-family: 'Sora', sans-serif
+}
+
+.tab:hover {
+  color: var(--br)
+}
+
+.tab.on {
+  color: var(--br);
+  background: var(--wh);
+  border-bottom: 2px solid var(--br);
+  margin-bottom: -1px
+}
+
+/* Form */
+.form-body {
+  padding: 24px 28px 28px
+}
+
+.panel {
+  display: none
+}
+
+.panel.on {
+  display: block
+}
+
+.fg {
+  margin-bottom: 16px
+}
+
+.fg label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--tx3);
+  margin-bottom: 6px
+}
+
+.fg input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--bor);
+  border-radius: 10px;
+  font-size: 13px;
+  font-family: 'Sora', sans-serif;
+  background: var(--wh);
+  color: var(--tx);
+  outline: none;
+  transition: .15s
+}
+
+.fg input:focus {
+  border-color: var(--brl);
+  box-shadow: 0 0 0 3px rgba(201, 162, 122, .15)
+}
+
+.fg .hint {
+  font-size: 11px;
+  color: var(--tx3);
+  margin-top: 5px
+}
+
+/* Secret key field */
+.secret-wrap {
+  position: relative
+}
+
+.secret-wrap input {
+  padding-right: 40px
+}
+
+.secret-wrap .eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--tx3)
+}
+
+/* Button */
+.btn-main {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, var(--br), var(--brd));
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Sora', sans-serif;
+  cursor: pointer;
+  transition: .18s;
+  margin-top: 8px
+}
+
+.btn-main:hover {
+  opacity: .92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(123, 75, 42, .3)
+}
+
+.btn-main:active {
+  transform: none
+}
+
+.btn-main:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  transform: none
+}
+
+/* Error / success */
+.msg-box {
+  padding: 11px 14px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  display: none
+}
+
+.msg-box.err {
+  background: var(--rdb);
+  color: var(--rd);
+  border: 1px solid #F0C0C0;
+  display: block
+}
+
+.msg-box.ok {
+  background: var(--grb);
+  color: var(--gr);
+  border: 1px solid #C0E0CC;
+  display: block
+}
+
+/* Divider */
+.or {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0;
+  font-size: 12px;
+  color: var(--tx3)
+}
+
+.or::before,
+.or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--bor)
+}
+
+/* Back link */
+.back-link {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--tx3)
+}
+
+.back-link a {
+  color: var(--br);
+  font-weight: 700;
+  text-decoration: none
+}
+
+.back-link a:hover {
+  text-decoration: underline
+}
+
+/* Admin key info box */
+.key-info {
+  background: var(--amb);
+  border: 1px solid #F0D890;
+  border-radius: 9px;
+  padding: 11px 14px;
+  font-size: 12px;
+  color: var(--am);
+  margin-bottom: 16px;
+  line-height: 1.5
+}
+
+.key-info strong {
+  display: block;
+  margin-bottom: 3px
+}
+
+/* Spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg)
+  }
+}
+
+.spin {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, .4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .6s linear infinite;
+  vertical-align: middle;
+  margin-right: 6px
+}
+
+/* ── Responsive additions ── */
+@media (max-width: 520px) {
+  body {
+    padding: 16px 12px;
+  }
+
+  .wrapper {
+    max-width: 100%;
+  }
+
+  .logo {
+    margin-bottom: 20px;
+  }
+
+  .logo-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  .logo h1 {
+    font-size: 18px;
+  }
+
+  .card-header {
+    padding: 18px 20px 16px;
+  }
+
+  .card-header h2 {
+    font-size: 17px;
+  }
+
+  .form-body {
+    padding: 18px 20px 22px;
+  }
+
+  .fg input {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .fg label {
+    font-size: 10px;
+  }
+
+  .btn-main {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .tab {
+    padding: 11px;
+    font-size: 12px;
+  }
+
+  .key-info {
+    font-size: 11px;
+    padding: 9px 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  body {
+    padding: 12px 8px;
+  }
+
+  .card-header {
+    padding: 14px 16px;
+  }
+
+  .form-body {
+    padding: 14px 16px 18px;
+  }
+}
+</style>
+
+<div class="wrapper">
+    <div class="logo">
+      <div class="logo-icon">S</div>
+      <h1>StudXchange</h1>
+      <p>Academic Marketplace & Committee Hub</p>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="admin-badge">⚙️ Admin Portal</div>
+        <h2>Administrator Access</h2>
+        <p>Sign in or register as a committee administrator</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab on" onclick="switchTab('login',this)">Sign In</button>
+        <button class="tab" onclick="switchTab('signup',this)">Register Admin</button>
+      </div>
+
+      <div class="form-body">
+
+        <!-- LOGIN PANEL -->
+        <div class="panel on" id="panel-login">
+          <div class="msg-box" id="loginMsg"></div>
+          <div class="fg">
+            <label>Email Address</label>
+            <input type="email" id="lEmail" placeholder="admin@college.edu" autocomplete="email">
+          </div>
+          <div class="fg">
+            <label>Password</label>
+            <div class="secret-wrap">
+              <input type="password" id="lPass" placeholder="••••••••" autocomplete="current-password">
+              <button class="eye" onclick="toggleVis('lPass',this)">👁</button>
+            </div>
+          </div>
+          <button class="btn-main" id="loginBtn" onclick="doLogin()">Sign In as Admin →</button>
+          <div class="or">or</div>
+          <div class="back-link">Not an admin? <a href="/login">Student Login</a></div>
+        </div>
+
+        <!-- SIGNUP PANEL -->
+        <div class="panel" id="panel-signup">
+          <div class="msg-box" id="signupMsg"></div>
+          <div class="key-info">
+            <strong>🔑 Admin Registration Key Required</strong>
+            Contact your institution's IT department or existing admin for the secret key to register.
+          </div>
+          <div class="fg">
+            <label>Full Name</label>
+            <input type="text" id="sName" placeholder="e.g. Prof. Ananya Sharma">
+          </div>
+          <div class="fg">
+            <label>Email Address</label>
+            <input type="email" id="sEmail" placeholder="admin@college.edu">
+          </div>
+          <div class="fg">
+            <label>Password</label>
+            <div class="secret-wrap">
+              <input type="password" id="sPass" placeholder="Min. 8 characters">
+              <button class="eye" onclick="toggleVis('sPass',this)">👁</button>
+            </div>
+            <div class="hint">Must be at least 8 characters</div>
+          </div>
+          <div class="fg">
+            <label>Admin Secret Key</label>
+            <div class="secret-wrap">
+              <input type="password" id="sKey" placeholder="Secret key from institution">
+              <button class="eye" onclick="toggleVis('sKey',this)">👁</button>
+            </div>
+            <div class="hint">Default key: <code>STUDXCHANGE_ADMIN_2026</code> (change in server.js)</div>
+          </div>
+          <button class="btn-main" id="signupBtn" onclick="doSignup()">Register as Admin →</button>
+          <div class="or">or</div>
+          <div class="back-link">Not an admin? <a href="/login">Student Login</a></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<script>
+
+
+function switchTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('panel-' + tab).classList.add('on');
+  clearMsgs();
+}
+
+function clearMsgs() {
+  ['loginMsg','signupMsg'].forEach(id => {
+    const el = document.getElementById(id);
+    el.className = 'msg-box';
+    el.textContent = '';
+  });
+}
+
+function showMsg(id, text, type) {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = 'msg-box ' + type;
+}
+
+function toggleVis(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁'; }
+}
+
+async function doLogin() {
+  const email = document.getElementById('lEmail').value.trim();
+  const pass  = document.getElementById('lPass').value;
+  if (!email || !pass) { showMsg('loginMsg', 'Please fill all fields.', 'err'); return; }
+
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>Signing in…';
+
+  try {
+    const r = await fetch(`/admin/login`, {
+      method: 'POST',
+      headers: { "Authorization": "Bearer " + getToken(), 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass })
+    });
+    const d = await r.json();
+    if (d.success) {
+      // Store admin user (same format as regular user but with isAdmin flag)
+      const adminUser = { ...d.admin, isAdmin: true };
+      localStorage.setItem('user', JSON.stringify(adminUser));
+      localStorage.setItem('token', d.token);
+      showMsg('loginMsg', '✅ Welcome back, ' + d.admin.name + '! Redirecting…', 'ok');
+      setTimeout(() => location.href = '/committee', 1000);
+    } else {
+      showMsg('loginMsg', '❌ ' + (d.error || 'Invalid credentials'), 'err');
+    }
+  } catch {
+    showMsg('loginMsg', '⚠️ Cannot connect to server. Make sure server.js is running.', 'err');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = 'Sign In as Admin →';
+}
+
+async function doSignup() {
+  const name  = document.getElementById('sName').value.trim();
+  const email = document.getElementById('sEmail').value.trim();
+  const pass  = document.getElementById('sPass').value;
+  const key   = document.getElementById('sKey').value.trim();
+
+  if (!name || !email || !pass || !key) { showMsg('signupMsg', 'Please fill all fields.', 'err'); return; }
+  if (pass.length < 8) { showMsg('signupMsg', 'Password must be at least 8 characters.', 'err'); return; }
+
+  const btn = document.getElementById('signupBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>Registering…';
+
+  try {
+    const r = await fetch(`/admin/register`, {
+      method: 'POST',
+      headers: { "Authorization": "Bearer " + getToken(), 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password: pass, secret_key: key })
+    });
+    const d = await r.json();
+    if (d.success) {
+      showMsg('signupMsg', '✅ Admin account created! You can now sign in.', 'ok');
+      document.getElementById('sName').value = '';
+      document.getElementById('sEmail').value = '';
+      document.getElementById('sPass').value = '';
+      document.getElementById('sKey').value = '';
+      setTimeout(() => switchTab('login', document.querySelectorAll('.tab')[0]), 1500);
+    } else {
+      showMsg('signupMsg', '❌ ' + (d.error || 'Registration failed'), 'err');
+    }
+  } catch {
+    showMsg('signupMsg', '⚠️ Cannot connect to server. Make sure server.js is running.', 'err');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = 'Register as Admin →';
+}
+
+// Allow Enter key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    if (document.getElementById('panel-login').classList.contains('on')) doLogin();
+    else doSignup();
+  }
+});
+
+</script>
+
+<%- include('../partials/foot') %>

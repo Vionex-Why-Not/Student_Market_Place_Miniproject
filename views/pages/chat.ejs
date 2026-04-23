@@ -1,0 +1,1108 @@
+<%- include('../partials/head', { title, headExtras: '', extraScript: '' }) %>
+<style>
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --br: #7B4B2A;
+  --brd: #5A361D;
+  --brl: #C9A27A;
+  --brp: #F0E4D6;
+  --bg: #F7F3EE;
+  --bg2: #EFE6DB;
+  --bg3: #E5D8C8;
+  --bor: #E2D3C3;
+  --tx: #231209;
+  --tx2: #6B4838;
+  --tx3: #9C7B66;
+  --wh: #FFFFFF;
+  --green: #276840;
+  --green-bg: #E8F5ED;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--tx);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── NAV ──────────────────────────────────────────────────────────────────── */
+.nav {
+  background: var(--wh);
+  border-bottom: 1px solid var(--bor);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  height: 58px;
+  gap: 14px;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.nav-logo {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-logo b {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--br);
+}
+
+.nav-logo small {
+  font-size: 10px;
+  color: var(--tx3);
+}
+
+.nav-r {
+  margin-left: auto;
+}
+
+.nbtn {
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg2);
+  color: var(--br);
+  border: 1px solid var(--bor);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nbtn:hover {
+  background: var(--bg3);
+}
+
+/* ── LAYOUT ───────────────────────────────────────────────────────────────── */
+.chat-wrap {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ── SIDEBAR ──────────────────────────────────────────────────────────────── */
+.sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  background: var(--wh);
+  border-right: 1.5px solid var(--bor);
+  display: flex;
+  flex-direction: column;
+}
+
+.sb-head {
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid var(--bor);
+}
+
+.sb-head h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.sb-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg);
+  border: 1.5px solid var(--bor);
+  border-radius: 9px;
+  padding: 8px 12px;
+}
+
+.sb-search input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--tx);
+  flex: 1;
+}
+
+.conv-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.conv-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: .15s;
+  border-bottom: 1px solid var(--bor);
+  position: relative;
+}
+
+.conv-item:hover {
+  background: var(--bg);
+}
+
+.conv-item.active {
+  background: var(--brp);
+}
+
+.conv-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--br);
+  border-radius: 0 2px 2px 0;
+}
+
+.conv-av {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--wh);
+  flex-shrink: 0;
+  background: var(--br);
+}
+
+.conv-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.conv-name {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.conv-product-tag {
+  font-size: 11px;
+  color: var(--tx2);
+  background: var(--bg2);
+  padding: 2px 8px;
+  border-radius: 99px;
+  border: 1px solid var(--bor);
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.conv-price {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--br);
+  margin-top: 3px;
+}
+
+.empty-sidebar {
+  padding: 32px 18px;
+  text-align: center;
+  color: var(--tx3);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.empty-sidebar .ei {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+/* ── MAIN CHAT ────────────────────────────────────────────────────────────── */
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* empty state */
+.chat-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--tx3);
+  gap: 10px;
+}
+
+.chat-empty .big {
+  font-size: 52px;
+}
+
+.chat-empty h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--tx2);
+}
+
+.chat-empty p {
+  font-size: 13px;
+}
+
+/* active chat */
+.active-chat {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* chat header */
+.chat-head {
+  background: var(--wh);
+  border-bottom: 1.5px solid var(--bor);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.chat-head-av {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--wh);
+  background: var(--br);
+  flex-shrink: 0;
+}
+
+.chat-head-info {
+  flex: 1;
+}
+
+.chat-head-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.chat-head-sub {
+  font-size: 11px;
+  color: var(--tx3);
+  margin-top: 2px;
+}
+
+.product-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg);
+  border: 1.5px solid var(--bor);
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+
+.pb-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: var(--bg2);
+  flex-shrink: 0;
+}
+
+.pb-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pb-title {
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pb-price {
+  font-size: 12px;
+  color: var(--br);
+  font-weight: 600;
+}
+
+.pb-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 99px;
+  background: var(--green-bg);
+  color: var(--green);
+  border: 1px solid #B0D8B8;
+}
+
+/* messages */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background: var(--bor);
+  border-radius: 4px;
+}
+
+.date-divider {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tx3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-divider::before,
+.date-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--bor);
+}
+
+.msg {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.msg.me {
+  flex-direction: row-reverse;
+}
+
+.msg-av {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--wh);
+  background: var(--brl);
+  margin-bottom: 2px;
+}
+
+.msg.me .msg-av {
+  background: var(--br);
+}
+
+.bubble {
+  max-width: 62%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+.msg.them .bubble {
+  background: var(--wh);
+  border: 1.5px solid var(--bor);
+  color: var(--tx);
+  border-bottom-left-radius: 4px;
+}
+
+.msg.me .bubble {
+  background: var(--br);
+  color: var(--wh);
+  border-bottom-right-radius: 4px;
+}
+
+.bubble-time {
+  font-size: 10px;
+  margin-top: 4px;
+  display: block;
+  opacity: .65;
+  text-align: right;
+}
+
+.msg.them .bubble-time {
+  text-align: left;
+  color: var(--tx3);
+}
+
+/* typing */
+.typing-wrap {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  padding: 0 20px 8px;
+}
+
+.typing-dots {
+  background: var(--wh);
+  border: 1.5px solid var(--bor);
+  padding: 10px 16px;
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.typing-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tx3);
+  animation: bounce .9s infinite;
+}
+
+.typing-dots span:nth-child(2) {
+  animation-delay: .15s;
+}
+
+.typing-dots span:nth-child(3) {
+  animation-delay: .3s;
+}
+
+@keyframes bounce {
+
+  0%,
+  60%,
+  100% {
+    transform: translateY(0)
+  }
+
+  30% {
+    transform: translateY(-5px)
+  }
+}
+
+/* input bar */
+.input-bar {
+  background: var(--wh);
+  border-top: 1.5px solid var(--bor);
+  padding: 12px 18px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.chat-input {
+  flex: 1;
+  border: 1.5px solid var(--bor);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--tx);
+  background: var(--bg);
+  outline: none;
+  resize: none;
+  max-height: 100px;
+  line-height: 1.5;
+}
+
+.chat-input:focus {
+  border-color: var(--brl);
+}
+
+.send-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: var(--br);
+  color: var(--wh);
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: .15s;
+}
+
+.send-btn:hover {
+  background: var(--brd);
+}
+
+.send-btn:disabled {
+  background: var(--bor);
+  cursor: not-allowed;
+}
+
+/* loading spinner */
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: var(--tx3);
+  font-size: 13px;
+  gap: 8px;
+}
+
+/* ── Back button (mobile only) ── */
+.back-to-list {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: var(--bg2);
+  border: 1px solid var(--bor);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--br);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  flex-shrink: 0;
+  transition: .15s;
+}
+
+.back-to-list:hover {
+  background: var(--bg3);
+}
+
+@media (max-width: 700px) {
+  body {
+    overflow: hidden;
+    height: 100dvh;
+  }
+
+  .nav {
+    padding: 0 14px;
+    height: 52px;
+    gap: 10px;
+  }
+
+  .nav-logo b {
+    font-size: 15px;
+  }
+
+  .nav-logo small {
+    display: none;
+  }
+
+  .nbtn {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .chat-wrap {
+    position: relative;
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    transition: transform .28s cubic-bezier(.4, 0, .2, 1);
+    transform: translateX(0);
+  }
+
+  .sidebar.hidden-mobile {
+    transform: translateX(-100%);
+    pointer-events: none;
+  }
+
+  .sb-head {
+    padding: 14px 16px 10px;
+  }
+
+  .sb-head h2 {
+    font-size: 15px;
+  }
+
+  .conv-item {
+    padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .conv-av {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .conv-name {
+    font-size: 12px;
+  }
+
+  .conv-product-tag {
+    font-size: 10px;
+    max-width: 170px;
+  }
+
+  .chat-main {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    transform: translateX(100%);
+    transition: transform .28s cubic-bezier(.4, 0, .2, 1);
+    background: var(--bg);
+  }
+
+  .chat-main.show-mobile {
+    transform: translateX(0);
+  }
+
+  .back-to-list {
+    display: flex;
+  }
+
+  .chat-head {
+    padding: 10px 14px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .chat-head-av {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+
+  .chat-head-name {
+    font-size: 13px;
+  }
+
+  .chat-head-sub {
+    font-size: 10px;
+  }
+
+  .product-bar {
+    padding: 6px 10px;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .pb-img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .pb-title {
+    font-size: 11px;
+  }
+
+  .pb-price {
+    font-size: 11px;
+  }
+
+  .messages {
+    padding: 14px 12px;
+    gap: 5px;
+  }
+
+  .bubble {
+    max-width: 80%;
+    font-size: 12px;
+    padding: 9px 12px;
+  }
+
+  .msg-av {
+    width: 24px;
+    height: 24px;
+    font-size: 9px;
+  }
+
+  .input-bar {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .chat-input {
+    font-size: 13px;
+    padding: 9px 12px;
+  }
+
+  .send-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+
+  .typing-wrap {
+    padding: 0 12px 6px;
+  }
+}
+</style>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<!-- NAV -->
+  <nav class="nav">
+    <a href="/marketplace" class="nav-logo">
+      <b>StudXchange</b>
+      <small>Academic Marketplace</small>
+    </a>
+    <div class="nav-r">
+      <a href="/marketplace" class="nbtn">← Marketplace</a>
+    </div>
+  </nav>
+
+  <!-- BODY -->
+  <div class="chat-wrap">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <div class="sb-head">
+        <h2>💬 Messages</h2>
+        <div class="sb-search">
+          <span>🔍</span>
+          <input type="text" id="convSearch" placeholder="Search chats…" oninput="filterChats()">
+        </div>
+      </div>
+      <div class="conv-list" id="convList">
+        <div class="loader">Loading chats…</div>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="chat-main">
+
+      <!-- Empty state -->
+      <div class="chat-empty" id="chatEmpty">
+        <div class="big">💬</div>
+        <h3>Your Messages</h3>
+        <p>Select a conversation to start chatting</p>
+      </div>
+
+      <!-- Active chat -->
+      <div class="active-chat" id="activeChat">
+        <div class="chat-head" id="chatHead"><button class="back-to-list" onclick="closeMobileChat()">← Back</button>
+        </div>
+
+        <div class="messages" id="messagesArea">
+          <div class="loader">Loading messages…</div>
+        </div>
+
+        <!-- Typing indicator -->
+        <div class="typing-wrap" id="typingWrap" style="display:none;">
+          <div class="msg-av" style="background:var(--brl);" id="typingAvatar">?</div>
+          <div class="typing-dots"><span></span><span></span><span></span></div>
+        </div>
+
+        <!-- Input -->
+        <div class="input-bar">
+          <textarea class="chat-input" id="chatInput" placeholder="Type a message…" rows="1"
+            onkeydown="handleKey(event)" oninput="autoResize(this); emitTyping()"></textarea>
+          <button class="send-btn" onclick="sendMessage()" id="sendBtn">➤</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+
+// ── AUTH CHECK ────────────────────────────────────────────────────────────────
+const ME = JSON.parse(localStorage.getItem("user"));
+if (!ME) {
+  alert("Please login first");
+  location.href = "/login";
+}
+
+const socket = io();
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let allChats      = [];
+let activeChat    = null;   // current chat_request object
+let typingTimer   = null;
+let isTyping      = false;
+
+// ── LOAD ALL CHATS FOR SIDEBAR ────────────────────────────────────────────────
+async function loadChats() {
+  try {
+    const res  = await fetch(`/my-chats/${getUserId(ME)}`);
+    allChats   = await res.json();
+    renderSidebar(allChats);
+
+    // If a request_id was passed in URL, open it automatically
+    const params     = new URLSearchParams(window.location.search);
+    const openId     = params.get("request_id");
+    if (openId) {
+      const found = allChats.find(c => String(c.id) === String(openId));
+      if (found) openConv(found);
+    }
+  } catch (err) {
+    document.getElementById("convList").innerHTML =
+      `<div class="empty-sidebar"><div class="ei">⚠️</div>Could not load chats.<br>Make sure server is running.</div>`;
+  }
+}
+
+function renderSidebar(chats) {
+  const list = document.getElementById("convList");
+
+  if (!chats.length) {
+    list.innerHTML = `
+      <div class="empty-sidebar">
+        <div class="ei">💬</div>
+        <b>No active chats yet</b><br>
+        Accept a buyer's request from your profile to start chatting.
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = chats.map(c => {
+    // Decide who the "other person" is
+    const otherName = getUserId(ME) === c.sender_id ? c.seller_name : c.buyer_name;
+    const initials  = otherName.split(" ").map(w => w[0]).join("").toUpperCase().slice(0,2);
+    const isActive  = activeChat && String(activeChat._id||activeChat.id) === String(c._id||c.id);
+    const isRent    = (c.request_type === "rent");
+    const priceLabel = c.product_price ? (isRent ? `₹${c.product_price}/day` : `₹${c.product_price}`) : "";
+    return `
+      <div class="conv-item ${isActive ? 'active' : ''}" onclick="openConvById('${c._id||c.id}')">
+        <div class="conv-av">${initials}</div>
+        <div class="conv-info">
+          <div class="conv-name">${otherName}</div>
+          <span class="conv-product-tag">${isRent ? "🔄" : "📦"} ${c.product_title || "Item"}</span>
+          <div class="conv-price">${priceLabel}</div>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function filterChats() {
+  const q = document.getElementById("convSearch").value.toLowerCase();
+  const filtered = allChats.filter(c =>
+    c.product_title.toLowerCase().includes(q) ||
+    c.buyer_name.toLowerCase().includes(q)    ||
+    c.seller_name.toLowerCase().includes(q)
+  );
+  renderSidebar(filtered);
+}
+
+// ── OPEN CONVERSATION ─────────────────────────────────────────────────────────
+function openConvById(id) {
+  const chat = allChats.find(c => String(c._id||c.id) === String(id));
+  if (chat) openConv(chat);
+}
+
+async function openConv(chat) {
+  // Leave old room
+  if (activeChat) socket.emit("leave_room", activeChat.id);
+
+  activeChat = chat;
+  renderSidebar(allChats);
+
+  // Show chat panel
+  document.getElementById("chatEmpty").style.display  = "none";
+  document.getElementById("activeChat").style.display = "flex";
+  // Mobile: slide to chat panel
+  if (window.innerWidth <= 700) {
+    document.getElementById("sidebar").classList.add("hidden-mobile");
+    document.getElementById("activeChat").closest(".chat-main").classList.add("show-mobile");
+  }
+
+  // Render header
+  const otherName = getUserId(ME) === chat.sender_id ? chat.seller_name : chat.buyer_name;
+  const initials  = otherName.split(" ").map(w => w[0]).join("").toUpperCase().slice(0,2);
+  document.getElementById("chatHead").innerHTML = `
+    <div class="chat-head-av">${initials}</div>
+    <div class="chat-head-info">
+      <div class="chat-head-name">${otherName}</div>
+      <div class="chat-head-sub">About: ${chat.product_title || "Item"}</div>
+    </div>
+    <div class="product-bar">
+      <img class="pb-img" src="${chat.product_image || ''}" onerror="this.style.display='none'" ${chat.product_image ? '' : 'style="display:none"'}>
+      <div class="pb-info">
+        <div class="pb-title">${chat.product_title || "Item"}</div>
+        <div class="pb-price">${chat.product_price ? ((chat.request_type === 'rent') ? `₹${chat.product_price}/day` : `₹${chat.product_price}`) : ""}</div>
+      </div>
+      <span class="pb-badge">${chat.request_type === 'rent' ? '🔄 Rent' : 'Active'}</span>
+    </div>`;
+
+  document.getElementById("typingAvatar").textContent = initials;
+
+  // Join socket room
+  socket.emit("join_room", chat.id);
+
+  // Load message history
+  await loadMessages(chat.id);
+
+  document.getElementById("chatInput").focus();
+}
+
+// ── LOAD MESSAGE HISTORY ──────────────────────────────────────────────────────
+async function loadMessages(request_id) {
+  const area = document.getElementById("messagesArea");
+  area.innerHTML = `<div class="loader">Loading messages…</div>`;
+
+  try {
+    const res  = await fetch(`/messages/${request_id}`);
+    const msgs = await res.json();
+
+    area.innerHTML = `<div class="date-divider">Today</div>`;
+
+    if (!msgs.length) {
+      area.innerHTML += `
+        <div style="text-align:center;color:var(--tx3);font-size:13px;padding:20px;">
+          No messages yet. Say hello! 👋
+        </div>`;
+    } else {
+      msgs.forEach(m => appendMessage(m, false));
+    }
+
+    scrollToBottom();
+  } catch (err) {
+    area.innerHTML = `<div class="loader">Error loading messages</div>`;
+  }
+}
+
+// ── APPEND A MESSAGE BUBBLE ───────────────────────────────────────────────────
+function appendMessage(m, scroll = true) {
+  const area   = document.getElementById("messagesArea");
+  const isMe   = m.sender_id === getUserId(ME);
+  const name   = m.sender_name || ME.name;
+  const initials = name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0,2);
+
+  const time = m.time || formatTime(m.created_at || new Date());
+
+  area.innerHTML += `
+    <div class="msg ${isMe ? 'me' : 'them'}">
+      <div class="msg-av">${initials}</div>
+      <div class="bubble">
+        ${escapeHtml(m.message)}
+        <span class="bubble-time">${time}</span>
+      </div>
+    </div>`;
+
+  if (scroll) scrollToBottom();
+}
+
+// ── SEND MESSAGE ──────────────────────────────────────────────────────────────
+function sendMessage() {
+  const input = document.getElementById("chatInput");
+  const text  = input.value.trim();
+  if (!text || !activeChat) return;
+
+  socket.emit("send_message", {
+    request_id:  activeChat.id,
+    sender_id:   getUserId(ME),
+    sender_name: ME.name,
+    message:     text
+  });
+
+  input.value = "";
+  input.style.height = "auto";
+  stopTyping();
+}
+
+// ── TYPING ────────────────────────────────────────────────────────────────────
+function emitTyping() {
+  if (!activeChat) return;
+  if (!isTyping) {
+    isTyping = true;
+    socket.emit("typing", { request_id: activeChat.id, name: ME.name });
+  }
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(stopTyping, 2000);
+}
+
+function stopTyping() {
+  if (!activeChat || !isTyping) return;
+  isTyping = false;
+  socket.emit("stop_typing", { request_id: activeChat.id });
+}
+
+// ── SOCKET EVENTS ─────────────────────────────────────────────────────────────
+socket.on("receive_message", (data) => {
+  // Only show if we're in that room
+  if (!activeChat || data.request_id !== activeChat.id) return;
+  appendMessage(data, true);
+});
+
+socket.on("typing", (data) => {
+  if (!activeChat) return;
+  document.getElementById("typingWrap").style.display = "flex";
+});
+
+socket.on("stop_typing", () => {
+  document.getElementById("typingWrap").style.display = "none";
+});
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function handleKey(e) {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = "auto";
+  el.style.height = Math.min(el.scrollHeight, 100) + "px";
+}
+
+function scrollToBottom() {
+  const area = document.getElementById("messagesArea");
+  setTimeout(() => area.scrollTop = area.scrollHeight, 50);
+}
+
+function formatTime(dateVal) {
+  const d = dateVal ? new Date(dateVal) : new Date();
+  return d.toLocaleTimeString("en-IN", { hour:"2-digit", minute:"2-digit", hour12:true });
+}
+
+function escapeHtml(str) {
+  return (str || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/\n/g,"<br>");
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+function closeMobileChat() {
+  document.getElementById("sidebar").classList.remove("hidden-mobile");
+  document.querySelector(".chat-main").classList.remove("show-mobile");
+  activeChat = null;
+}
+
+loadChats();
+
+</script>
+
+<%- include('../partials/foot') %>

@@ -1,0 +1,520 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<%- include('../partials/head', { title, headExtras: '', extraScript: '' }) %>
+<style>
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --br: #7B4B2A;
+  --brd: #5A361D;
+  --brl: #C9A27A;
+  --bg: #F7F3EE;
+  --bg2: #EFE6DB;
+  --bg3: #E5D8C8;
+  --bor: #E2D3C3;
+  --tx: #231209;
+  --muted: #7A5C48;
+  --wh: #fff;
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+}
+
+.auth-wrap {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* LEFT */
+.auth-left {
+  width: 420px;
+  flex-shrink: 0;
+  background: linear-gradient(145deg, #7B4B2A 0%, #5A361D 60%, #2A0F06 100%);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 10% 80%, rgba(201, 162, 122, .15), transparent 60%),
+    radial-gradient(ellipse 50% 50% at 90% 10%, rgba(255, 255, 255, .05), transparent 50%);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: auto;
+  position: relative;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .15);
+  border: 1px solid rgba(255, 255, 255, .2);
+  color: #fff;
+  font-weight: 800;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: rgba(255, 255, 255, .6);
+  margin-top: 2px;
+}
+
+.left-content {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.left-content h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.left-content h1 em {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  color: var(--brl);
+  font-weight: 600;
+}
+
+.left-content p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, .65);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feat {
+  font-size: 13px;
+  color: rgba(255, 255, 255, .8);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.left-footer {
+  font-size: 11px;
+  color: rgba(255, 255, 255, .35);
+  position: relative;
+}
+
+/* RIGHT */
+.auth-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 28px;
+  background: var(--bg);
+}
+
+.form-box {
+  width: 100%;
+  max-width: 420px;
+  background: var(--wh);
+  border-radius: 22px;
+  padding: 36px;
+  box-shadow: 0 12px 48px rgba(43, 27, 18, .10);
+  border: 1.5px solid var(--bor);
+  animation: fadeUp .4s cubic-bezier(.34, 1.2, .64, 1);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+.form-box.hidden {
+  display: none;
+}
+
+.form-box h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--tx);
+  margin-bottom: 6px;
+}
+
+.form-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 26px;
+}
+
+.fg {
+  margin-bottom: 16px;
+}
+
+.fg label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+
+.fg label i {
+  margin-right: 5px;
+}
+
+.fg input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 11px;
+  border: 1.5px solid var(--bor);
+  background: var(--bg2);
+  font-size: 13px;
+  font-family: 'Sora', sans-serif;
+  color: var(--tx);
+  outline: none;
+  transition: .2s;
+}
+
+.fg input:focus {
+  border-color: var(--brl);
+  background: var(--wh);
+  box-shadow: 0 0 0 3px rgba(201, 162, 122, .15);
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Sora', sans-serif;
+  cursor: pointer;
+  transition: .25s;
+  background: linear-gradient(135deg, var(--br), var(--brd));
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(123, 75, 42, .3);
+}
+
+.auth-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(123, 75, 42, .4);
+}
+
+.auth-btn:disabled {
+  opacity: .7;
+  cursor: not-allowed;
+}
+
+.auth-btn.green {
+  background: linear-gradient(135deg, #0D9488, #0F766E);
+  box-shadow: 0 6px 20px rgba(13, 148, 136, .3);
+}
+
+.auth-btn.green:hover:not(:disabled) {
+  box-shadow: 0 10px 28px rgba(13, 148, 136, .4);
+}
+
+.switch-text {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.switch-text span {
+  color: var(--br);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.switch-text span:hover {
+  text-decoration: underline;
+}
+
+@media(max-width:800px) {
+  .auth-left {
+    display: none;
+  }
+
+  .auth-right {
+    padding: 24px 16px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE ENHANCEMENTS — Login.css
+═══════════════════════════════════════════ */
+@media (max-width: 800px) {
+  .auth-left {
+    display: none;
+  }
+
+  .auth-right {
+    padding: 32px 20px;
+    align-items: flex-start;
+    padding-top: 48px;
+  }
+
+  .form-box {
+    padding: 28px 22px;
+    border-radius: 18px;
+  }
+
+  .form-box h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-right {
+    padding: 24px 12px;
+    padding-top: 36px;
+  }
+
+  .form-box {
+    padding: 22px 18px;
+  }
+
+  .form-box h2 {
+    font-size: 18px;
+  }
+
+  .form-sub {
+    font-size: 12px;
+  }
+
+  .fg input {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .auth-btn {
+    padding: 13px;
+    font-size: 13px;
+  }
+
+  .switch-text {
+    font-size: 12px;
+  }
+
+  .fg label {
+    font-size: 10px;
+  }
+}
+</style>
+
+<div class="auth-wrap">
+
+    <!-- LEFT PANEL -->
+    <div class="auth-left">
+      <div class="brand">
+        <div class="brand-icon">S</div>
+        <div>
+          <div class="brand-name">StudXchange</div>
+          <div class="brand-sub">Academic Marketplace</div>
+        </div>
+      </div>
+      <div class="left-content">
+        <h1>Trade smarter,<br><em>study better.</em></h1>
+        <p>The student marketplace built for VCET. Buy, sell, rent — all in one place.</p>
+        <div class="features">
+          <div class="feat">✅ Only VCET students</div>
+          <div class="feat">💬 Built-in chat</div>
+          <div class="feat">🔄 Rent & borrow</div>
+          <div class="feat">🛡️ Verified community</div>
+        </div>
+      </div>
+      <div class="left-footer">© 2026 StudXchange</div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="auth-right" id="authRight">
+
+      <!-- LOGIN -->
+      <div class="form-box" id="loginBox">
+        <h2>Welcome back 👋</h2>
+        <p class="form-sub">Sign in to your StudXchange account</p>
+
+        <form id="loginForm">
+          <div class="fg">
+            <label><i class="fa fa-envelope"></i> Email</label>
+            <input type="email" id="loginEmail" placeholder="you@vcet.edu.in" required autocomplete="email">
+          </div>
+          <div class="fg">
+            <label><i class="fa fa-lock"></i> Password</label>
+            <input type="password" id="loginPassword" placeholder="Your password" required>
+          </div>
+          <button type="submit" class="auth-btn" id="loginBtn">Sign In</button>
+        </form>
+
+        <div class="switch-text">
+          Don't have an account?
+          <span onclick="showRegister()">Create one →</span>
+        </div>
+      </div>
+
+      <!-- REGISTER -->
+      <div class="form-box hidden" id="registerBox">
+        <h2>Join StudXchange 🎓</h2>
+        <p class="form-sub">Create your account with your VCET email</p>
+
+        <form id="registerForm">
+          <div class="fg">
+            <label><i class="fa fa-user"></i> Full Name</label>
+            <input type="text" id="regName" placeholder="Your full name" required autocomplete="name">
+          </div>
+          <div class="fg">
+            <label><i class="fa fa-envelope"></i> VCET Email</label>
+            <input type="email" id="regEmail" placeholder="you@vcet.edu.in" required autocomplete="email">
+          </div>
+          <div class="fg">
+            <label><i class="fa fa-lock"></i> Password</label>
+            <input type="password" id="regPassword" placeholder="Choose a password" required>
+          </div>
+          <button type="submit" class="auth-btn green" id="registerBtn">Create Account</button>
+        </form>
+
+        <div class="switch-text">
+          Already have an account?
+          <span onclick="showLogin()">Sign in →</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+function showLogin() {
+  document.getElementById("loginBox").classList.remove("hidden");
+  document.getElementById("registerBox").classList.add("hidden");
+}
+function showRegister() {
+  document.getElementById("registerBox").classList.remove("hidden");
+  document.getElementById("loginBox").classList.add("hidden");
+}
+if (window.location.hash === "#register") showRegister();
+
+// ── REGISTER ──────────────────────────────────────────────────────────────────
+document.getElementById("registerForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  var btn      = document.getElementById("registerBtn");
+  var name     = document.getElementById("regName").value.trim();
+  var email    = document.getElementById("regEmail").value.trim().toLowerCase();
+  var password = document.getElementById("regPassword").value;
+  var domain   = "@vcet.edu.in";
+
+  if (!email.endsWith(domain)) {
+    alert("Only " + domain + " email is allowed!"); return;
+  }
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters"); return;
+  }
+
+  btn.disabled = true; btn.textContent = "Creating account…";
+  try {
+    var res  = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password })
+    });
+    var data = await res.json();
+    if (data.success) {
+      alert("Account created! Please sign in.");
+      showLogin();
+    } else {
+      alert(data.error || data.message || "Registration failed");
+    }
+  } catch(err) {
+    alert("Server not reachable.");
+  }
+  btn.disabled = false; btn.textContent = "Create Account";
+});
+
+// ── LOGIN ─────────────────────────────────────────────────────────────────────
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  var btn      = document.getElementById("loginBtn");
+  var email    = document.getElementById("loginEmail").value.trim().toLowerCase();
+  var password = document.getElementById("loginPassword").value;
+
+  if (!email || !password) { alert("Please fill all fields"); return; }
+
+  btn.disabled = true; btn.textContent = "Signing in…";
+  try {
+    var res  = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+    var data = await res.json();
+
+    if (data.success) {
+      // Save BOTH the user object AND the JWT token
+      localStorage.setItem("user",  JSON.stringify(data.user));
+      localStorage.setItem("token", data.token);
+
+      var redirect = localStorage.getItem("redirect_after_login");
+      localStorage.removeItem("redirect_after_login");
+      window.location.href = redirect || "/marketplace";
+    } else {
+      alert(data.message || "Login failed");
+      btn.disabled = false; btn.textContent = "Sign In";
+    }
+  } catch(err) {
+    alert("Server not reachable.");
+    btn.disabled = false; btn.textContent = "Sign In";
+  }
+});
+</script>
+
+<%- include('../partials/foot') %>

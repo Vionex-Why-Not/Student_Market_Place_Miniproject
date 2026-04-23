@@ -1,0 +1,2717 @@
+<%- include('../partials/head', { title, headExtras: '', extraScript: '' }) %>
+<style>
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
+
+:root {
+  --br: #7B4B2A;
+  --brd: #5A361D;
+  --brl: #C9A27A;
+  --brp: #F0E4D6;
+  --bg: #F7F3EE;
+  --bg2: #EFE6DB;
+  --bg3: #E5D8C8;
+  --bor: #DDD0C0;
+  --tx: #231209;
+  --tx2: #6B4838;
+  --tx3: #9C7B66;
+  --wh: #FFFFFF;
+  --gr: #276840;
+  --grb: #E8F5ED;
+  --rd: #B83232;
+  --rdb: #FDEAEA;
+  --am: #A06B10;
+  --amb: #FEF3DC;
+  --blue: #2F5FAB;
+  --blueb: #EBF3FF;
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--tx);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased
+}
+
+/* ─── NAV ─── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(255, 255, 255, .95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--bor);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 28px;
+  height: 62px
+}
+
+.nav-logo {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px
+}
+
+.nav-logo-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--brl), var(--brd));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  font-family: 'Lora', serif
+}
+
+.nav-logo b {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--br);
+  display: block;
+  line-height: 1.1
+}
+
+.nav-logo small {
+  font-size: 10px;
+  color: var(--tx3)
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  margin-left: 8px
+}
+
+.nl {
+  text-decoration: none;
+  padding: 7px 13px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tx2);
+  transition: .18s
+}
+
+.nl:hover,
+.nl.active {
+  background: var(--bg2);
+  color: var(--br)
+}
+
+.nav-r {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap
+}
+
+.nav-user {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tx2);
+  white-space: nowrap
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 9px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Sora', sans-serif;
+  transition: .18s;
+  white-space: nowrap
+}
+
+.btn-g {
+  background: var(--bg2);
+  color: var(--tx2);
+  border: 1px solid var(--bor)
+}
+
+.btn-g:hover {
+  background: var(--bg3)
+}
+
+.btn-p {
+  background: var(--br);
+  color: #fff
+}
+
+.btn-p:hover {
+  background: var(--brd)
+}
+
+.btn-out {
+  background: var(--rdb);
+  color: var(--rd);
+  border: 1px solid #F0C0C0
+}
+
+.btn-out:hover {
+  background: #FADBDB
+}
+
+.btn-sm {
+  padding: 6px 13px;
+  font-size: 12px
+}
+
+.switch-role-btn {
+  background: var(--amb);
+  color: var(--am);
+  border: 1px solid #F0D890;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Sora', sans-serif;
+  cursor: pointer;
+  transition: .18s
+}
+
+.switch-role-btn:hover {
+  background: #FDE8A8
+}
+
+/* ─── HERO ─── */
+.hero {
+  background: linear-gradient(130deg, #D4A574 0%, var(--br) 55%, #3A1E0C 100%);
+  padding: 52px 40px 48px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  justify-content: space-between
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 10% 70%, rgba(255, 255, 255, .08), transparent 60%), radial-gradient(ellipse 40% 60% at 90% 20%, rgba(255, 255, 255, .06), transparent 50%)
+}
+
+.hero-cont {
+  position: relative;
+  z-index: 1
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, .15);
+  border: 1px solid rgba(255, 255, 255, .25);
+  color: rgba(255, 255, 255, .92);
+  padding: 5px 14px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 14px
+}
+
+.hero h1 {
+  font-family: 'Lora', serif;
+  font-size: 40px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+  letter-spacing: -.5px
+}
+
+.hero p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, .75);
+  max-width: 460px;
+  margin-bottom: 24px;
+  line-height: 1.6
+}
+
+.hero-stats {
+  display: flex;
+  gap: 28px
+}
+
+.hs {
+  display: flex;
+  flex-direction: column
+}
+
+.hs-num {
+  font-family: 'Lora', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1
+}
+
+.hs-lbl {
+  font-size: 10px;
+  color: rgba(255, 255, 255, .65);
+  font-weight: 500;
+  margin-top: 3px;
+  text-transform: uppercase;
+  letter-spacing: .5px
+}
+
+.hero-orbs {
+  position: relative;
+  width: 180px;
+  height: 130px;
+  flex-shrink: 0
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  opacity: .22
+}
+
+.o1 {
+  width: 110px;
+  height: 110px;
+  background: rgba(255, 255, 255, .3);
+  top: 0;
+  right: 10px;
+  animation: fl1 6s ease-in-out infinite
+}
+
+.o2 {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, .2);
+  bottom: 5px;
+  right: 5px;
+  animation: fl2 4.5s ease-in-out infinite
+}
+
+.o3 {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, .15);
+  top: 15px;
+  right: 100px;
+  animation: fl1 7s ease-in-out infinite reverse
+}
+
+@keyframes fl1 {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1)
+  }
+
+  50% {
+    transform: translateY(-12px) scale(1.04)
+  }
+}
+
+@keyframes fl2 {
+
+  0%,
+  100% {
+    transform: translateY(0)
+  }
+
+  50% {
+    transform: translateY(9px)
+  }
+}
+
+/* ─── ADMIN BAR ─── */
+.admin-bar {
+  background: var(--amb);
+  border-bottom: 1px solid #F0D890;
+  padding: 10px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--am);
+  flex-wrap: wrap
+}
+
+.admin-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px
+}
+
+.btn-adm {
+  background: var(--am);
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  transition: .18s
+}
+
+.btn-adm:hover {
+  background: #7A4E08
+}
+
+.btn-adm-out {
+  background: #fff;
+  color: var(--am);
+  border: 1px solid #F0D890;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  transition: .18s
+}
+
+.btn-adm-out:hover {
+  background: var(--amb)
+}
+
+.admin-name-badge {
+  background: rgba(160, 107, 16, .15);
+  border: 1px solid #F0D890;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px
+}
+
+/* ─── LAYOUT ─── */
+.hub {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 28px 60px;
+  align-items: start
+}
+
+/* ─── SIDEBAR ─── */
+.sb {
+  position: sticky;
+  top: 82px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px
+}
+
+.sb-card {
+  background: var(--wh);
+  border: 1px solid var(--bor);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(43, 27, 18, .06)
+}
+
+.sb-hd {
+  padding: 11px 15px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+  color: var(--tx3);
+  border-bottom: 1px solid var(--bor);
+  background: var(--bg2)
+}
+
+.sb-btn {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 11px 15px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tx2);
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  transition: .15s;
+  position: relative
+}
+
+.sb-btn:hover {
+  background: var(--bg2);
+  color: var(--br)
+}
+
+.sb-btn.on {
+  background: var(--brp);
+  color: var(--br);
+  font-weight: 700
+}
+
+.sb-btn:not(:last-child) {
+  border-bottom: 1px solid var(--bg2)
+}
+
+.nb {
+  background: var(--rd);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 99px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  margin-left: auto
+}
+
+.sb-comm-item {
+  padding: 10px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--br);
+  cursor: pointer;
+  transition: .15px;
+  border-bottom: 1px solid var(--bg2)
+}
+
+.sb-comm-item:hover {
+  background: var(--brp)
+}
+
+.sb-comm-item:last-child {
+  border-bottom: none
+}
+
+.sb-empty {
+  padding: 14px 15px;
+  font-size: 12px;
+  color: var(--tx3)
+}
+
+/* ─── MAIN ─── */
+.view {
+  display: none
+}
+
+.view.on {
+  display: block
+}
+
+.view-hd {
+  margin-bottom: 22px
+}
+
+.view-hd h2 {
+  font-family: 'Lora', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--br);
+  margin-bottom: 4px
+}
+
+.view-hd p {
+  font-size: 13px;
+  color: var(--tx3)
+}
+
+/* ─── SEARCH BAR ─── */
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap
+}
+
+.sb-input {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--wh);
+  border: 1.5px solid var(--bor);
+  border-radius: 10px;
+  padding: 9px 13px;
+  transition: .18s
+}
+
+.sb-input:focus-within {
+  border-color: var(--brl)
+}
+
+.sb-input input {
+  border: none;
+  background: none;
+  outline: none;
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  flex: 1;
+  color: var(--tx)
+}
+
+.search-bar select {
+  padding: 9px 13px;
+  border: 1.5px solid var(--bor);
+  border-radius: 10px;
+  font-size: 12px;
+  font-family: 'Sora', sans-serif;
+  background: var(--wh);
+  color: var(--tx2);
+  outline: none;
+  cursor: pointer
+}
+
+/* ─── COMMITTEE GRID ─── */
+.comm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 18px
+}
+
+.comm-card {
+  background: var(--wh);
+  border: 1.5px solid var(--bor);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: .22s cubic-bezier(.34, 1.2, .64, 1);
+  animation: rise .35s ease both
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px)
+  }
+
+  to {
+    opacity: 1;
+    transform: none
+  }
+}
+
+.comm-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 44px rgba(123, 75, 42, .14);
+  border-color: var(--brl)
+}
+
+.comm-banner {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  background: linear-gradient(135deg, var(--brp), var(--bg3));
+  position: relative
+}
+
+.comm-banner .admin-del {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--rdb);
+  color: var(--rd);
+  border: 1px solid #F0C0C0;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  display: none
+}
+
+.comm-card:hover .admin-del {
+  display: block
+}
+
+.comm-body {
+  padding: 16px 18px 12px
+}
+
+.comm-name {
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 4px
+}
+
+.comm-cat {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--tx3);
+  margin-bottom: 9px
+}
+
+.comm-desc {
+  font-size: 12px;
+  color: var(--tx2);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 14px
+}
+
+.comm-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  border-top: 1px solid var(--bg2);
+  background: var(--bg2)
+}
+
+.comm-members {
+  font-size: 12px;
+  color: var(--tx3);
+  font-weight: 600
+}
+
+.btn-join {
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1.5px solid var(--br);
+  background: var(--br);
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  transition: .18s
+}
+
+.btn-join:hover {
+  background: var(--brd)
+}
+
+.btn-join.approved {
+  background: var(--grb);
+  color: var(--gr);
+  border-color: #C0DEC8;
+  cursor: default
+}
+
+.btn-join.pending {
+  background: var(--amb);
+  color: var(--am);
+  border-color: #F0D890;
+  cursor: default
+}
+
+/* ─── EVENTS GRID ─── */
+.ev-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px
+}
+
+.ev-card {
+  background: var(--wh);
+  border: 1.5px solid var(--bor);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: .22s;
+  animation: rise .35s ease both;
+  position: relative
+}
+
+.ev-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(123, 75, 42, .13);
+  border-color: var(--brl)
+}
+
+.ev-top {
+  background: linear-gradient(135deg, var(--br), var(--brd));
+  padding: 20px 18px 16px;
+  color: #fff
+}
+
+.ev-date-chip {
+  display: inline-block;
+  background: rgba(255, 255, 255, .2);
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 10px
+}
+
+.ev-card-title {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 4px
+}
+
+.ev-card-comm {
+  font-size: 12px;
+  opacity: .8
+}
+
+.ev-body2 {
+  padding: 14px 18px 16px
+}
+
+.ev-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--tx2);
+  margin-bottom: 6px;
+  line-height: 1.4
+}
+
+.ev-prog-bar {
+  height: 6px;
+  background: var(--bg3);
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 10px 0 4px
+}
+
+.ev-prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--br), var(--brl));
+  border-radius: 99px;
+  transition: .4s
+}
+
+.ev-prog-txt {
+  font-size: 11px;
+  color: var(--tx3);
+  font-weight: 600
+}
+
+.ev-admin-del {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(184, 50, 50, .85);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  display: none
+}
+
+.ev-card:hover .ev-admin-del {
+  display: block
+}
+
+/* ─── FEED ─── */
+.feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px
+}
+
+.feed-card {
+  background: var(--wh);
+  border: 1.5px solid var(--bor);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  gap: 14px;
+  transition: .18s;
+  animation: rise .3s ease both;
+  position: relative
+}
+
+.feed-card:hover {
+  border-color: var(--brl);
+  box-shadow: 0 6px 20px rgba(123, 75, 42, .1)
+}
+
+.feed-card.clickable {
+  cursor: pointer
+}
+
+.feed-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brp);
+  border-radius: 12px
+}
+
+.feed-body {
+  flex: 1;
+  min-width: 0
+}
+
+.feed-meta {
+  font-size: 11px;
+  color: var(--tx3);
+  font-weight: 600;
+  margin-bottom: 5px
+}
+
+.feed-title {
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 5px;
+  color: var(--tx)
+}
+
+.feed-text {
+  font-size: 13px;
+  color: var(--tx2);
+  line-height: 1.6
+}
+
+.feed-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  margin-top: 8px
+}
+
+.fb-info {
+  background: var(--grb);
+  color: var(--gr)
+}
+
+.fb-important {
+  background: var(--amb);
+  color: var(--am)
+}
+
+.fb-event {
+  background: var(--blueb);
+  color: var(--blue)
+}
+
+.fb-announcement {
+  background: var(--brp);
+  color: var(--br)
+}
+
+.feed-del {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--rdb);
+  color: var(--rd);
+  border: 1px solid #F0C0C0;
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  display: none
+}
+
+.feed-card:hover .feed-del {
+  display: block
+}
+
+/* ─── GROUPS ─── */
+.group-card {
+  background: var(--wh);
+  border: 1.5px solid var(--bor);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  transition: .18s
+}
+
+.group-card:hover {
+  border-color: var(--brl)
+}
+
+.group-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  gap: 12px
+}
+
+/* ─── NOTIF ─── */
+.notif-item {
+  background: var(--wh);
+  border: 1.5px solid var(--bor);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  transition: .18s
+}
+
+.notif-item.unread {
+  border-color: var(--brl);
+  background: #FDFAF6
+}
+
+.notif-icon {
+  font-size: 24px;
+  flex-shrink: 0
+}
+
+.notif-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 3px
+}
+
+.notif-text {
+  font-size: 12px;
+  color: var(--tx2);
+  line-height: 1.5
+}
+
+.notif-time {
+  font-size: 11px;
+  color: var(--tx3);
+  margin-top: 4px
+}
+
+/* ─── MODALS ─── */
+.modal-ov {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 8, 2, .55);
+  backdrop-filter: blur(5px);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 16px
+}
+
+.modal-ov.open {
+  display: flex
+}
+
+.modal {
+  background: var(--wh);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, .28);
+  animation: mIn .25s cubic-bezier(.34, 1.4, .64, 1)
+}
+
+.modal-wide {
+  max-width: 700px
+}
+
+@keyframes mIn {
+  from {
+    transform: scale(.92);
+    opacity: 0
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1
+  }
+}
+
+.modal-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 0
+}
+
+.modal-hd h3 {
+  font-family: 'Lora', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--br)
+}
+
+.mod-x {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg2);
+  color: var(--tx2);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .18s;
+  flex-shrink: 0
+}
+
+.mod-x:hover {
+  background: var(--bg3);
+  transform: rotate(90deg)
+}
+
+.modal-body {
+  padding: 20px 24px 24px
+}
+
+.modal-ft {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 0 24px 22px
+}
+
+.fg {
+  margin-bottom: 14px
+}
+
+.fg label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--tx3);
+  margin-bottom: 6px
+}
+
+.fg input,
+.fg select,
+.fg textarea {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1.5px solid var(--bor);
+  border-radius: 10px;
+  font-size: 13px;
+  font-family: 'Sora', sans-serif;
+  background: var(--wh);
+  color: var(--tx);
+  outline: none;
+  transition: .15s
+}
+
+.fg input:focus,
+.fg select:focus,
+.fg textarea:focus {
+  border-color: var(--brl);
+  box-shadow: 0 0 0 3px rgba(201, 162, 122, .15)
+}
+
+/* ─── COMMITTEE MODAL DETAIL ─── */
+.cm-icon-big {
+  font-size: 36px
+}
+
+.cat-pill {
+  display: inline-block;
+  background: var(--brp);
+  color: var(--br);
+  padding: 3px 11px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: 8px
+}
+
+.cm-tabs {
+  display: flex;
+  gap: 3px;
+  background: var(--bg2);
+  border-radius: 9px;
+  padding: 4px;
+  margin: 18px 0;
+  overflow-x: auto
+}
+
+.cm-tab {
+  padding: 7px 14px;
+  border-radius: 7px;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--tx2);
+  background: none;
+  font-family: 'Sora', sans-serif;
+  transition: .15s;
+  white-space: nowrap
+}
+
+.cm-tab:hover {
+  background: var(--wh)
+}
+
+.cm-tab.on {
+  background: var(--wh);
+  color: var(--br);
+  box-shadow: 0 1px 4px rgba(43, 27, 18, .1)
+}
+
+.cm-panel {
+  display: none
+}
+
+.cm-panel.on {
+  display: block
+}
+
+.cm-stats {
+  display: flex;
+  gap: 18px;
+  background: var(--bg2);
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 16px
+}
+
+.cm-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+
+.cm-stat span {
+  font-family: 'Lora', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--br)
+}
+
+.cm-stat small {
+  font-size: 10px;
+  color: var(--tx3);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  margin-top: 2px
+}
+
+/* ─── ANN ─── */
+.ann-item {
+  background: var(--bg2);
+  border: 1px solid var(--bor);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  position: relative
+}
+
+.ann-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 99px;
+  margin-bottom: 7px
+}
+
+.ann-badge.info {
+  background: var(--grb);
+  color: var(--gr)
+}
+
+.ann-badge.important {
+  background: var(--amb);
+  color: var(--am)
+}
+
+.ann-badge.event {
+  background: var(--blueb);
+  color: var(--blue)
+}
+
+.ann-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 5px
+}
+
+.ann-body {
+  font-size: 13px;
+  color: var(--tx2);
+  line-height: 1.6
+}
+
+.ann-time {
+  font-size: 11px;
+  color: var(--tx3);
+  margin-top: 6px
+}
+
+.ann-del {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--rdb);
+  color: var(--rd);
+  border: 1px solid #F0C0C0;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  display: none
+}
+
+.ann-item:hover .ann-del {
+  display: inline-block
+}
+
+/* ─── GROUP CHAT ─── */
+.chat-box {
+  background: var(--bg2);
+  border: 1px solid var(--bor);
+  border-radius: 10px;
+  height: 290px;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px
+}
+
+.msg {
+  max-width: 75%;
+  padding: 8px 13px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.5
+}
+
+.msg.mine {
+  background: var(--br);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 3px
+}
+
+.msg.theirs {
+  background: var(--wh);
+  border: 1px solid var(--bor);
+  color: var(--tx);
+  align-self: flex-start;
+  border-bottom-left-radius: 3px
+}
+
+.msg-sender {
+  font-size: 10px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  opacity: .7
+}
+
+.msg-time {
+  font-size: 10px;
+  opacity: .6;
+  margin-top: 3px
+}
+
+.chat-row {
+  display: flex;
+  gap: 8px
+}
+
+.chat-row input {
+  flex: 1;
+  padding: 10px 13px;
+  border: 1.5px solid var(--bor);
+  border-radius: 9px;
+  font-size: 13px;
+  font-family: 'Sora', sans-serif;
+  background: var(--wh);
+  outline: none;
+  transition: .15s
+}
+
+.chat-row input:focus {
+  border-color: var(--brl)
+}
+
+/* ─── MEMBER ROWS ─── */
+.member-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--bg2)
+}
+
+.member-row:last-child {
+  border-bottom: none
+}
+
+.member-av {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brl), var(--br));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0
+}
+
+.member-name {
+  font-size: 13px;
+  font-weight: 700;
+  flex: 1
+}
+
+.member-email {
+  font-size: 11px;
+  color: var(--tx3)
+}
+
+.member-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 99px
+}
+
+.mb-member {
+  background: var(--bg2);
+  color: var(--tx3)
+}
+
+.mb-admin {
+  background: var(--amb);
+  color: var(--am)
+}
+
+/* ─── PENDING ROWS ─── */
+.req-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--bg2)
+}
+
+.req-row:last-child {
+  border-bottom: none
+}
+
+.req-info {
+  flex: 1;
+  min-width: 0
+}
+
+.req-name {
+  font-size: 13px;
+  font-weight: 700
+}
+
+.req-meta {
+  font-size: 11px;
+  color: var(--tx3);
+  margin-top: 2px
+}
+
+.req-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0
+}
+
+.btn-accept {
+  background: var(--grb);
+  color: var(--gr);
+  border: 1px solid #C0E0CC;
+  padding: 6px 13px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  transition: .15s
+}
+
+.btn-accept:hover {
+  background: #D0EDD9
+}
+
+.btn-reject2 {
+  background: var(--rdb);
+  color: var(--rd);
+  border: 1px solid #F0C0C0;
+  padding: 6px 13px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  transition: .15s
+}
+
+.btn-reject2:hover {
+  background: #FADBDB
+}
+
+/* ─── EVENT DETAIL MODAL ─── */
+.ev-detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--tx2);
+  margin-bottom: 10px;
+  line-height: 1.5
+}
+
+.btn-rsvp {
+  width: 100%;
+  padding: 13px;
+  background: var(--br);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Sora', sans-serif;
+  cursor: pointer;
+  transition: .18s;
+  margin-top: 8px
+}
+
+.btn-rsvp:hover {
+  background: var(--brd)
+}
+
+.btn-rsvp:disabled {
+  background: var(--bg3);
+  color: var(--tx3);
+  cursor: not-allowed
+}
+
+.btn-rsvp.done {
+  background: var(--grb);
+  color: var(--gr)
+}
+
+/* ─── EMPTY STATE ─── */
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--wh);
+  border: 1px solid var(--bor);
+  border-radius: 14px
+}
+
+.empty .ei {
+  font-size: 48px;
+  margin-bottom: 12px
+}
+
+.empty h4 {
+  font-family: 'Lora', serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px
+}
+
+.empty p {
+  font-size: 13px;
+  color: var(--tx3);
+  line-height: 1.6
+}
+
+/* ─── TOAST ─── */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(60px);
+  background: var(--tx);
+  color: #fff;
+  padding: 11px 24px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  transition: .3s ease;
+  z-index: 999;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+  pointer-events: none
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0)
+}
+
+/* ─── CONFIRM MODAL ─── */
+.confirm-modal {
+  max-width: 380px
+}
+
+.confirm-body {
+  padding: 16px 24px 0;
+  font-size: 14px;
+  color: var(--tx2);
+  line-height: 1.6
+}
+
+@media(max-width:860px) {
+  .hub {
+    grid-template-columns: 1fr;
+    padding: 16px 16px 50px
+  }
+
+  .sb {
+    position: static
+  }
+
+  .hero {
+    padding: 36px 20px
+  }
+}
+
+@media(max-width:580px) {
+
+  .comm-grid,
+  .ev-grid {
+    grid-template-columns: 1fr
+  }
+
+  .nav-links {
+    display: none
+  }
+
+  .hero h1 {
+    font-size: 28px
+  }
+
+  .hero-orbs {
+    display: none
+  }
+}
+
+
+@media (max-width: 860px) {
+  .nav {
+    padding: 0 16px;
+    height: 54px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hub-layout {
+    padding: 16px 16px 48px;
+  }
+}
+
+@media (max-width: 580px) {
+  .nav {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .nav-logo small {
+    display: none;
+  }
+
+  .btn {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .hero-band {
+    padding: 28px 16px;
+  }
+
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .hero-sub {
+    font-size: 12px;
+  }
+
+  .hero-stats {
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .hub-layout {
+    grid-template-columns: 1fr;
+    padding: 12px 12px 48px;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    position: static;
+  }
+
+  .sb-sec {
+    margin-bottom: 0;
+  }
+
+  .comm-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ev-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Modal bottom sheet on mobile */
+  .modal-wrap {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal {
+    border-radius: 20px 20px 0 0;
+    max-height: 90vh;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .modal-head {
+    padding: 14px 16px;
+  }
+
+  .modal-body {
+    padding: 14px 16px;
+  }
+
+  .cm-stats-row {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .fg-row {
+    grid-template-columns: 1fr;
+  }
+
+  .price-boxes {
+    flex-direction: column;
+  }
+}
+
+
+.nav-r {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+/* hide menu button on desktop */
+.menu-toggle {
+  display: none;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* normal menu (desktop) */
+.nav-menu {
+  display: flex;
+  gap: 10px;
+}
+
+/* 📱 MOBILE */
+@media (max-width: 768px) {
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 45px;
+    right: 0;
+    flex-direction: column;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    width: 180px;
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .nav-menu button {
+    width: 100%;
+    text-align: left;
+  }
+}
+</style>
+
+<!-- APP SHELL -->
+  <div id="appShell">
+
+    <!-- NAV -->
+    <nav class="nav">
+      <a href="/marketplace" class="nav-logo">
+        <div class="nav-logo-icon">S</div>
+        <div><b>StudXchange</b><small>Academic Marketplace</small></div>
+      </a>
+      <div class="nav-links">
+        <a href="/marketplace" class="nl">🛍️ Marketplace</a>
+        <a href="/rentpage" class="nl">🔄 Rent</a>
+        <a href="/committee" class="nl active">🏛️ Hub</a>
+      </div>
+
+      <div class="nav-r">
+        <span class="nav-user" id="navUser"></span>
+
+        <!-- ✅ Add this (hamburger) -->
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+        <!-- ✅ Wrap buttons inside menu -->
+        <div class="nav-menu" id="navMenu">
+          <button class="switch-role-btn" id="switchBtn" onclick="switchRole()">↩ Switch to Admin</button>
+          <button class="btn btn-g btn-sm" onclick="location.href='/myprofile'">My Profile</button>
+          <button class="btn btn-out btn-sm" onclick="signOut()">Sign Out</button>
+        </div>
+      </div>
+
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-cont">
+        <div class="hero-badge">🏛️ Official College Hub</div>
+        <h1>Committee Hub</h1>
+        <p>Join clubs, attend events, collaborate — your college life, organized.</p>
+        <div class="hero-stats">
+          <div class="hs"><span class="hs-num" id="hComm">0</span><span class="hs-lbl">Committees</span></div>
+          <div class="hs"><span class="hs-num" id="hEv">0</span><span class="hs-lbl">Events</span></div>
+        </div>
+      </div>
+      <div class="hero-orbs">
+        <div class="orb o1"></div>
+        <div class="orb o2"></div>
+        <div class="orb o3"></div>
+      </div>
+    </div>
+
+    <!-- ADMIN BAR -->
+    <div id="adminBar" class="admin-bar" style="display:none">
+      <div class="admin-bar-left">
+        <span>⚙️ Admin Mode Active</span>
+        <span class="admin-name-badge" id="adminNameBadge"></span>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-adm" onclick="openModal('crtCommModal')">+ Committee</button>
+        <button class="btn-adm" onclick="openCreateEvent()">+ Event</button>
+        <button class="btn-adm" onclick="openCreateAnn()">+ Announcement</button>
+        <button class="btn-adm-out" onclick="openAdminRequests()">📋 Requests <span id="reqCountBadge"
+            style="display:none;background:var(--rd);color:#fff;font-size:10px;padding:1px 6px;border-radius:99px;margin-left:4px"></span></button>
+      </div>
+    </div>
+
+    <!-- LAYOUT -->
+    <div class="hub">
+      <aside class="sb">
+        <div class="sb-card">
+          <div class="sb-hd">Navigation</div>
+          <button class="sb-btn on" onclick="goView('feed',this)">📰 Activity Feed</button>
+          <button class="sb-btn" onclick="goView('committees',this)">🏛️ Committees</button>
+          <button class="sb-btn" onclick="goView('events',this)">📅 Events</button>
+          <button class="sb-btn" onclick="goView('mygroups',this)">🔒 My Groups</button>
+          <button class="sb-btn" onclick="goView('notifications',this)">
+            🔔 Notifications <span class="nb" id="notifBadge" style="display:none"></span>
+          </button>
+        </div>
+        <div class="sb-card">
+          <div class="sb-hd">My Committees</div>
+          <div id="sideCommList">
+            <div class="sb-empty">No memberships yet</div>
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <!-- FEED -->
+        <div class="view on" id="view-feed">
+          <div class="view-hd">
+            <h2>Activity Feed</h2>
+            <p>Latest announcements and events from all committees</p>
+          </div>
+          <div id="feedContainer" class="feed-list"></div>
+        </div>
+        <!-- COMMITTEES -->
+        <div class="view" id="view-committees">
+          <div class="view-hd">
+            <h2>All Committees</h2>
+            <p>Explore and join your college committees</p>
+          </div>
+          <div class="search-bar">
+            <div class="sb-input"><span>🔍</span><input id="commSearch" placeholder="Search committees…"
+                oninput="filterComms()"></div>
+            <select id="catFilter" onchange="filterComms()">
+              <option value="">All Categories</option>
+              <option>Technical</option>
+              <option>Cultural</option>
+              <option>Sports</option>
+              <option>Social Service</option>
+              <option>Arts</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="comm-grid" id="commGrid"></div>
+        </div>
+        <!-- EVENTS -->
+        <div class="view" id="view-events">
+          <div class="view-hd">
+            <h2>Upcoming Events</h2>
+            <p>Register for events organized by committees</p>
+          </div>
+          <div class="ev-grid" id="evGrid"></div>
+        </div>
+        <!-- MY GROUPS -->
+        <div class="view" id="view-mygroups">
+          <div class="view-hd">
+            <h2>My Private Groups</h2>
+            <p>Collaborate with your committee members</p>
+          </div>
+          <div id="myGroupsCont"></div>
+        </div>
+        <!-- NOTIFICATIONS -->
+        <div class="view" id="view-notifications">
+          <div class="view-hd">
+            <h2>Notifications</h2>
+            <p>Your alerts and updates</p>
+          </div>
+          <div id="notifList"></div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ═════ MODALS ═════ -->
+    <!-- Create Committee -->
+    <div class="modal-ov" id="crtCommModal">
+      <div class="modal">
+        <div class="modal-hd">
+          <h3>Create Committee</h3><button class="mod-x" onclick="closeModal('crtCommModal')">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="fg"><label>Name</label><input id="cName" placeholder="e.g. Coding Club"></div>
+          <div class="fg"><label>Description</label><textarea id="cDesc" rows="3"
+              placeholder="What does this committee do?"></textarea></div>
+          <div class="fg"><label>Category</label>
+            <select id="cCat">
+              <option>Technical</option>
+              <option>Cultural</option>
+              <option>Sports</option>
+              <option>Social Service</option>
+              <option>Arts</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fg"><label>Emoji Icon</label><input id="cIcon" placeholder="🎭" maxlength="4" value="🏛️"></div>
+        </div>
+        <div class="modal-ft">
+          <button class="btn btn-g" onclick="closeModal('crtCommModal')">Cancel</button>
+          <button class="btn btn-p" onclick="createCommittee()">Create</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Event -->
+    <div class="modal-ov" id="crtEvModal">
+      <div class="modal">
+        <div class="modal-hd">
+          <h3>Create Event</h3><button class="mod-x" onclick="closeModal('crtEvModal')">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="fg"><label>Event Title</label><input id="evTitle" placeholder="e.g. Hackathon 2026"></div>
+          <div class="fg"><label>Committee</label><select id="evComm"></select></div>
+          <div class="fg"><label>Description</label><textarea id="evDesc" rows="3"></textarea></div>
+          <div class="fg"><label>Date & Time</label><input type="datetime-local" id="evDate"></div>
+          <div class="fg"><label>Venue</label><input id="evVenue" placeholder="e.g. Seminar Hall A"></div>
+          <div class="fg"><label>Max Participants (0 = unlimited)</label><input type="number" id="evMax" value="0"
+              min="0"></div>
+        </div>
+        <div class="modal-ft">
+          <button class="btn btn-g" onclick="closeModal('crtEvModal')">Cancel</button>
+          <button class="btn btn-p" onclick="createEvent()">Create Event</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Announcement -->
+    <div class="modal-ov" id="crtAnnModal">
+      <div class="modal">
+        <div class="modal-hd">
+          <h3>Post Announcement</h3><button class="mod-x" onclick="closeModal('crtAnnModal')">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="fg"><label>Committee</label><select id="annComm"></select></div>
+          <div class="fg"><label>Title</label><input id="annTitle" placeholder="e.g. Meeting this Friday"></div>
+          <div class="fg"><label>Message</label><textarea id="annBody" rows="4"></textarea></div>
+          <div class="fg"><label>Priority</label>
+            <select id="annType">
+              <option value="info">ℹ️ Info</option>
+              <option value="important">⚠️ Important</option>
+              <option value="event">📅 Event Related</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-ft">
+          <button class="btn btn-g" onclick="closeModal('crtAnnModal')">Cancel</button>
+          <button class="btn btn-p" onclick="createAnnouncement()">Post</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Committee Detail -->
+    <div class="modal-ov" id="commModal">
+      <div class="modal modal-wide">
+        <div class="modal-hd">
+          <div style="display:flex;align-items:center;gap:12px">
+            <span id="cmIcon" class="cm-icon-big"></span>
+            <div>
+              <h3 id="cmName" style="margin:0"></h3><span id="cmCat" class="cat-pill"></span>
+            </div>
+          </div>
+          <button class="mod-x" onclick="closeModal('commModal')">×</button>
+        </div>
+        <div class="modal-body" style="padding-top:0">
+          <div class="cm-tabs">
+            <button class="cm-tab on" onclick="cmTab('about',this)">About</button>
+            <button class="cm-tab" onclick="cmTab('announcements',this)">Announcements</button>
+            <button class="cm-tab" onclick="cmTab('events',this)">Events</button>
+            <button class="cm-tab" id="cmChatTab" onclick="cmTab('chat',this)" style="display:none">🔒 Group
+              Chat</button>
+            <button class="cm-tab" id="cmMembTab" onclick="cmTab('members',this)" style="display:none">Members</button>
+          </div>
+          <div class="cm-panel on" id="cmp-about">
+            <div class="cm-stats">
+              <div class="cm-stat"><span id="cmMembers">—</span><small>Members</small></div>
+              <div class="cm-stat"><span id="cmEvents">—</span><small>Events</small></div>
+              <div class="cm-stat"><span id="cmPosts">—</span><small>Posts</small></div>
+            </div>
+            <p id="cmDesc" style="font-size:14px;line-height:1.7;color:var(--tx2);margin-bottom:16px"></p>
+            <div id="cmJoinArea"></div>
+          </div>
+          <div class="cm-panel" id="cmp-announcements">
+            <div id="cmAnnList"></div>
+          </div>
+          <div class="cm-panel" id="cmp-events">
+            <div id="cmEvList"></div>
+          </div>
+          <div class="cm-panel" id="cmp-chat">
+            <div class="chat-box" id="cmChatBox"></div>
+            <div class="chat-row">
+              <input id="cmChatInput" placeholder="Message the group…"
+                onkeydown="if(event.key==='Enter')sendGroupMsg()">
+              <button class="btn btn-p btn-sm" onclick="sendGroupMsg()">Send ➤</button>
+            </div>
+          </div>
+          <div class="cm-panel" id="cmp-members">
+            <div id="cmMemberList"></div>
+            <div id="cmPendingSection"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Event Detail -->
+    <div class="modal-ov" id="evModal">
+      <div class="modal">
+        <div class="modal-hd">
+          <h3 id="evmTitle"></h3><button class="mod-x" onclick="closeModal('evModal')">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="ev-detail-row"><span>📅</span><span id="evmDate"></span></div>
+          <div class="ev-detail-row"><span>📍</span><span id="evmVenue"></span></div>
+          <div class="ev-detail-row"><span>🏛️</span><span id="evmComm"></span></div>
+          <div class="ev-detail-row"><span>👥</span><span id="evmCount"></span></div>
+          <p id="evmDesc" style="margin:14px 0;font-size:13px;line-height:1.75;color:var(--tx2)"></p>
+          <div id="evmRsvpArea"></div>
+          <div id="evmAdminArea"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Requests -->
+    <div class="modal-ov" id="adminReqModal">
+      <div class="modal modal-wide">
+        <div class="modal-hd">
+          <h3>Manage Join Requests</h3><button class="mod-x" onclick="closeModal('adminReqModal')">×</button>
+        </div>
+        <div class="modal-body">
+          <div id="adminReqList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm Delete -->
+    <div class="modal-ov" id="confirmModal">
+      <div class="modal confirm-modal">
+        <div class="modal-hd">
+          <h3>Confirm Delete</h3><button class="mod-x" onclick="closeModal('confirmModal')">×</button>
+        </div>
+        <div class="confirm-body" id="confirmText"></div>
+        <div class="modal-ft" style="margin-top:16px">
+          <button class="btn btn-g" onclick="closeModal('confirmModal')">Cancel</button>
+          <button class="btn btn-out" id="confirmOkBtn">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+<script>
+
+// ── Auth check ────────────────────────────────────────────────────────────────
+const user = JSON.parse(localStorage.getItem("user"));
+if (!user) { alert("Please login first"); location.href = "/login"; }
+
+let userIsAdmin = !!(user && user.isAdmin);
+let allComms    = [];
+let allEvents   = [];
+let activeCmId  = null;
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+function toast(msg) {
+  const t = $("toast"); t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2500);
+}
+function timeAgo(iso) {
+  const d = (Date.now() - new Date(iso)) / 1000;
+  if (d < 60) return "just now"; if (d < 3600) return Math.floor(d/60) + "m ago";
+  if (d < 86400) return Math.floor(d/3600) + "h ago"; return Math.floor(d/86400) + "d ago";
+}
+function fmtDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short",year:"numeric"}) + " at " + d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
+}
+function openModal(id)  { $(id).classList.add("open"); }
+function closeModal(id) { $(id).classList.remove("open"); }
+document.querySelectorAll(".modal-ov").forEach(ov => ov.addEventListener("click", e => { if(e.target===ov) ov.classList.remove("open"); }));
+
+function confirmDelete(text, onOk) {
+  $("confirmText").textContent = text;
+  const btn = $("confirmOkBtn");
+  btn.onclick = () => { closeModal("confirmModal"); onOk(); };
+  openModal("confirmModal");
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+function setupUI() {
+  // Nav user label
+  $("navUser").textContent = "Hi, " + user.name.split(" ")[0] + (userIsAdmin ? " ⚙️" : " 🎓");
+
+  // Switch button text
+  if (userIsAdmin) {
+    $("switchBtn").textContent = "↩ Switch to Student";
+    $("adminBar").style.display = "flex";
+    $("adminNameBadge").textContent = "Admin: " + user.name;
+    // Load pending count for badge
+    loadPendingCount();
+  } else {
+    $("switchBtn").textContent = "↩ Switch to Admin";
+    $("adminBar").style.display = "none";
+  }
+}
+
+function switchRole() {
+  if (userIsAdmin) {
+    // Already admin, switch back to student mode
+    // Remove isAdmin flag and re-save
+    const studentUser = { ...user };
+    delete studentUser.isAdmin;
+    // Actually log out admin and go to student login
+    localStorage.removeItem("user");
+    location.href = "/login";
+  } else {
+    // Go to admin login
+    location.href = "/admin";
+  }
+}
+
+function signOut() { localStorage.removeItem("user"); location.href = "/login"; }
+
+async function loadPendingCount() {
+  try {
+    const r = await fetch(`/committee-requests/pending`);
+    const rows = await r.json();
+    const badge = $("reqCountBadge");
+    if (rows.length > 0) { badge.textContent = rows.length; badge.style.display = "inline"; }
+    else badge.style.display = "none";
+  } catch {}
+}
+
+// ── Stats ─────────────────────────────────────────────────────────────────────
+async function loadStats() {
+  try {
+    const [cr, er] = await Promise.all([fetch(`/committees`), fetch(`/committee-events`)]);
+    const comms = await cr.json(); const events = await er.json();
+    animNum("hComm", comms.length); animNum("hEv", events.length);
+  } catch {}
+}
+function animNum(id, target) {
+  let n = 0; const s = Math.ceil(target / 30);
+  const t = setInterval(() => { n = Math.min(n+s, target); $(id).textContent = n; if(n>=target)clearInterval(t); }, 40);
+}
+
+// ── Views ─────────────────────────────────────────────────────────────────────
+function goView(id, el) {
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("on"));
+  document.querySelectorAll(".sb-btn").forEach(b => b.classList.remove("on"));
+  $("view-"+id).classList.add("on"); el.classList.add("on");
+  if(id==="feed")          loadFeed();
+  if(id==="committees")    loadComms();
+  if(id==="events")        loadEvents();
+  if(id==="mygroups")      loadMyGroups();
+  if(id==="notifications") loadNotifications();
+}
+
+// ── Side committee list ───────────────────────────────────────────────────────
+async function loadSideComms() {
+  try {
+    const r = await fetch(`/my-committees/${getUserId(user)}`);
+    const data = await r.json();
+    const el = $("sideCommList");
+    if (!data.length) { el.innerHTML = `<div class="sb-empty">No memberships yet</div>`; return; }
+    el.innerHTML = data.map(c => `<div class="sb-comm-item" onclick="openCommittee('${c._id||c.id}')">${c.icon} ${c.name}</div>`).join("");
+  } catch {}
+}
+
+// ── FEED ──────────────────────────────────────────────────────────────────────
+async function loadFeed() {
+  const el = $("feedContainer");
+  try {
+    const [ar, er] = await Promise.all([fetch(`/announcements`), fetch(`/committee-events`)]);
+    const anns = await ar.json(); const events = await er.json();
+    let items = [
+      ...anns.map(a => ({...a, _type:"ann", _time:a.created_at})),
+      ...events.map(e => ({...e, _type:"ev", _time:e.event_date}))
+    ].sort((a,b) => new Date(b._time) - new Date(a._time));
+
+    if (!items.length) { el.innerHTML = `<div class="empty"><div class="ei">📰</div><h4>No activity yet</h4><p>Posts from committees will appear here.</p></div>`; return; }
+    el.innerHTML = items.map(item => {
+      if (item._type === "ann") {
+        const bc = item.type==="important"?"fb-important":item.type==="event"?"fb-event":"fb-info";
+        const delBtn = userIsAdmin ? `<button class="feed-del" onclick="event.stopPropagation();deleteAnnouncement(${item.id})">🗑 Delete</button>` : "";
+        return `<div class="feed-card">
+          ${delBtn}
+          <div class="feed-icon">${item.committee_icon||"🏛️"}</div>
+          <div class="feed-body">
+            <div class="feed-meta">📢 ${item.committee_name} · ${timeAgo(item.created_at)}</div>
+            <div class="feed-title">${item.title}</div>
+            <div class="feed-text">${item.body}</div>
+            <span class="feed-badge ${bc}">${item.type==="important"?"⚠️ Important":item.type==="event"?"📅 Event":"ℹ️ Info"}</span>
+          </div></div>`;
+      } else {
+        const delBtn = userIsAdmin ? `<button class="feed-del" onclick="event.stopPropagation();deleteEvent(${item.id})">🗑 Delete</button>` : "";
+        return `<div class="feed-card clickable" onclick="openEvent('${item._id||item.id}')">
+          ${delBtn}
+          <div class="feed-icon">${item.committee_icon||"📅"}</div>
+          <div class="feed-body">
+            <div class="feed-meta">📅 ${item.committee_name} · ${fmtDate(item.event_date)}</div>
+            <div class="feed-title">${item.title}</div>
+            <div class="feed-text">${item.description}</div>
+            <div class="feed-text" style="margin-top:4px;font-size:12px">📍 ${item.venue||"TBA"}</div>
+            <span class="feed-badge fb-announcement">🎉 Event</span>
+          </div></div>`;
+      }
+    }).join("");
+  } catch { el.innerHTML = `<div class="empty"><div class="ei">⚠️</div><h4>Could not load feed</h4><p>Make sure the server is running.</p></div>`; }
+}
+
+// ── COMMITTEES ────────────────────────────────────────────────────────────────
+async function loadComms() {
+  try {
+    const r = await fetch(`/committees`);
+    allComms = await r.json();
+    filterComms();
+  } catch {}
+}
+
+function filterComms() {
+  const q = ($("commSearch")?.value || "").toLowerCase();
+  const cat = $("catFilter")?.value || "";
+  const f = allComms.filter(c => (!q || c.name.toLowerCase().includes(q) || (c.description||"").toLowerCase().includes(q)) && (!cat || c.category===cat));
+  renderCommGrid(f);
+}
+
+function renderCommGrid(comms) {
+  const el = $("commGrid");
+  if (!comms.length) { el.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="ei">🔍</div><h4>No results</h4></div>`; return; }
+  el.innerHTML = comms.map((c, i) => {
+    const delBtn = userIsAdmin ? `<button class="admin-del" onclick="event.stopPropagation();deleteCommittee(${c.id},'${c.name}')">🗑</button>` : "";
+    return `<div class="comm-card" style="animation-delay:${i*0.04}s">
+      <div class="comm-banner">${c.icon||"🏛️"}${delBtn}</div>
+      <div class="comm-body">
+        <div class="comm-name">${c.name}</div>
+        <div class="comm-cat">${c.category}</div>
+        <div class="comm-desc">${c.description||""}</div>
+      </div>
+      <div class="comm-footer">
+        <span class="comm-members">👥 ${c.member_count||0} members</span>
+        <button class="btn btn-g btn-sm" onclick="openCommittee('${c._id||c.id}')">View →</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+// ── EVENTS ────────────────────────────────────────────────────────────────────
+async function loadEvents() {
+  try {
+    const r = await fetch(`/committee-events`);
+    allEvents = await r.json();
+    renderEventGrid(allEvents);
+  } catch {}
+}
+
+function renderEventGrid(events) {
+  const el = $("evGrid");
+  if (!events.length) { el.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="ei">📅</div><h4>No events yet</h4></div>`; return; }
+  el.innerHTML = events.map((e, i) => {
+    const d = new Date(e.event_date);
+    const pct = e.max_participants ? Math.round(((e.registered_count||0)/e.max_participants)*100) : 0;
+    const delBtn = userIsAdmin ? `<button class="ev-admin-del" onclick="event.stopPropagation();deleteEvent(${e.id})">🗑 Delete</button>` : "";
+    return `<div class="ev-card" style="animation-delay:${i*0.04}s" onclick="openEvent('${e._id||e.id}')">
+      ${delBtn}
+      <div class="ev-top">
+        <div class="ev-date-chip">📅 ${d.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}</div>
+        <div class="ev-card-title">${e.title}</div>
+        <div class="ev-card-comm">${e.committee_icon||"🏛️"} ${e.committee_name}</div>
+      </div>
+      <div class="ev-body2">
+        <div class="ev-row"><span>📍</span><span>${e.venue||"TBA"}</span></div>
+        <div class="ev-row"><span>🕐</span><span>${d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"})}</span></div>
+        ${e.max_participants ? `<div class="ev-prog-bar"><div class="ev-prog-fill" style="width:${Math.min(pct,100)}%"></div></div><div class="ev-prog-txt">${e.registered_count||0}/${e.max_participants} registered</div>` : `<div class="ev-row"><span>👥</span><span>${e.registered_count||0} registered</span></div>`}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+// ── EVENT DETAIL ──────────────────────────────────────────────────────────────
+async function openEvent(id) {
+  // Refresh events if needed
+  if (!allEvents.length) { const r = await fetch(`/committee-events`); allEvents = await r.json(); }
+  const e = allEvents.find(e => String(e._id||e.id) === String(id));
+  if (!e) return;
+  $("evmTitle").textContent = e.title;
+  $("evmDate").textContent = fmtDate(e.event_date);
+  $("evmVenue").textContent = e.venue || "TBA";
+  $("evmComm").textContent = (e.committee_icon||"🏛️") + " " + e.committee_name;
+  $("evmDesc").textContent = e.description || "";
+  const cnt = e.registered_count || 0;
+  $("evmCount").textContent = e.max_participants ? `${cnt}/${e.max_participants} (${Math.round(cnt/e.max_participants*100)}% full)` : `${cnt} registered`;
+
+  const rsvpEl = $("evmRsvpArea");
+  const admEl = $("evmAdminArea");
+  admEl.innerHTML = "";
+  if (userIsAdmin) {
+    rsvpEl.innerHTML = `<div style="font-size:13px;color:var(--br);font-weight:600;padding:10px 0">⚙️ Admin view — ${cnt} registrations</div>`;
+    admEl.innerHTML = `<button class="btn btn-out" style="width:100%;margin-top:8px" onclick="deleteEvent('${id}');closeModal('evModal')">🗑️ Delete This Event</button>`;
+  } else {
+    try {
+      const rr = await fetch(`/committee-events/${id}/rsvp/${getUserId(user)}`);
+      const rd = await rr.json();
+      if (rd.rsvped) {
+        rsvpEl.innerHTML = `<button class="btn-rsvp done" disabled>✅ You're Registered</button>`;
+      } else if (e.max_participants > 0 && cnt >= e.max_participants) {
+        rsvpEl.innerHTML = `<button class="btn-rsvp" disabled>Event Full</button>`;
+      } else {
+        rsvpEl.innerHTML = `<button class="btn-rsvp" onclick="rsvpEvent('${id}')">Register for Event →</button>`;
+      }
+    } catch { rsvpEl.innerHTML = `<button class="btn-rsvp" onclick="rsvpEvent('${id}')">Register for Event →</button>`; }
+  }
+  openModal("evModal");
+}
+
+async function rsvpEvent(id) {
+  try {
+    const r = await fetch(`/committee-events/${id}/rsvp`, {method:"POST",headers:{ "Authorization": "Bearer " + getToken(),"Content-Type":"application/json"},body:JSON.stringify({user_id:getUserId(user)})});
+    const d = await r.json();
+    if (d.success) { toast("Registered! 🎉"); closeModal("evModal"); loadEvents(); }
+    else toast(d.error || "Could not register");
+  } catch { toast("Server error"); }
+}
+
+// ── COMMITTEE DETAIL ──────────────────────────────────────────────────────────
+async function openCommittee(id) {
+  activeCmId = id;
+  if (!allComms.length) { const r = await fetch(`/committees`); allComms = await r.json(); }
+  const c = allComms.find(c => String(c._id||c.id) === String(id));
+  if (!c) return;
+
+  $("cmIcon").textContent = c.icon || "🏛️";
+  $("cmName").textContent = c.name;
+  $("cmCat").textContent  = c.category;
+  $("cmDesc").textContent = c.description || "";
+  $("cmMembers").textContent = c.member_count || 0;
+  $("cmEvents").textContent  = c.event_count || 0;
+  $("cmPosts").textContent   = c.post_count || 0;
+
+  let myStatus = "none";
+  if (!userIsAdmin) {
+    try { const r = await fetch(`/committees/${id}/membership/${getUserId(user)}`); const d = await r.json(); myStatus = d.status; } catch {}
+  }
+
+  const joinEl = $("cmJoinArea");
+  if (userIsAdmin) {
+    joinEl.innerHTML = `<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <span style="color:var(--br);font-weight:700;font-size:14px">⚙️ Managing as Admin</span>
+      <button class="btn btn-out btn-sm" onclick="deleteCommittee('${id}','${c.name}')">🗑️ Delete Committee</button>
+    </div>`;
+  }
+  else if (myStatus==="approved") joinEl.innerHTML = `<span style="color:var(--gr);font-weight:700;font-size:14px">✅ You are a member</span>`;
+  else if (myStatus==="pending")  joinEl.innerHTML = `<span style="color:var(--am);font-weight:700;font-size:14px">⏳ Join request pending</span>`;
+  else if (myStatus==="rejected") joinEl.innerHTML = `<span style="color:var(--rd);font-weight:700;font-size:14px">❌ Request was rejected</span>`;
+  else joinEl.innerHTML = `<button class="btn btn-p" onclick="requestJoin('${id}')">Request to Join</button>`;
+
+  const showPriv = myStatus==="approved" || userIsAdmin;
+  $("cmChatTab").style.display = showPriv ? "inline-block" : "none";
+  $("cmMembTab").style.display = showPriv ? "inline-block" : "none";
+
+  document.querySelectorAll(".cm-tab").forEach(t => t.classList.remove("on"));
+  document.querySelectorAll(".cm-panel").forEach(p => p.classList.remove("on"));
+  document.querySelector(".cm-tab").classList.add("on");
+  $("cmp-about").classList.add("on");
+  openModal("commModal");
+}
+
+function cmTab(panel, el) {
+  document.querySelectorAll(".cm-tab").forEach(t => t.classList.remove("on"));
+  document.querySelectorAll(".cm-panel").forEach(p => p.classList.remove("on"));
+  el.classList.add("on"); $("cmp-"+panel).classList.add("on");
+  if (panel==="announcements") loadCmAnns(activeCmId);
+  if (panel==="events")        loadCmEvents(activeCmId);
+  if (panel==="chat")          loadGroupChat(activeCmId);
+  if (panel==="members")       loadMembers(activeCmId);
+}
+
+async function requestJoin(id) {
+  try {
+    const r = await fetch(`/committees/${id}/join`, {method:"POST",headers:{ "Authorization": "Bearer " + getToken(),"Content-Type":"application/json"},body:JSON.stringify({user_id:getUserId(user)})});
+    const d = await r.json();
+    if (d.success) { toast("Join request sent! ⏳"); openCommittee(id); loadSideComms(); }
+    else toast(d.error || "Could not send request");
+  } catch { toast("Server error"); }
+}
+
+async function loadCmAnns(id) {
+  try {
+    const r = await fetch(`/announcements`);
+    const all = await r.json();
+    const anns = all.filter(a => String(a.committee_id||a.committee?._id) === String(id));
+    const el = $("cmAnnList");
+    if (!anns.length) { el.innerHTML = `<div class="empty"><div class="ei">📢</div><h4>No announcements yet</h4></div>`; return; }
+    el.innerHTML = anns.map(a => {
+      const delBtn = userIsAdmin ? `<button class="ann-del" onclick="deleteAnnouncement('${a._id||a.id}')">🗑</button>` : "";
+      return `<div class="ann-item">
+        ${delBtn}
+        <span class="ann-badge ${a.type}">${a.type==="important"?"⚠️ Important":a.type==="event"?"📅 Event":"ℹ️ Info"}</span>
+        <div class="ann-title">${a.title}</div>
+        <div class="ann-body">${a.body}</div>
+        <div class="ann-time">Posted ${timeAgo(a.created_at)}</div>
+      </div>`;
+    }).join("");
+  } catch {}
+}
+
+async function loadCmEvents(id) {
+  try {
+    const r = await fetch(`/committee-events`);
+    const all = await r.json();
+    const evs = all.filter(e => String(e.committee_id||e.committee?._id) === String(id));
+    const el = $("cmEvList");
+    if (!evs.length) { el.innerHTML = `<div class="empty"><div class="ei">📅</div><h4>No events yet</h4></div>`; return; }
+    el.innerHTML = evs.map(e => `<div style="background:var(--bg2);border:1px solid var(--bor);border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer" onclick="closeModal('commModal');openEvent('${e._id||e.id}')">
+      <div style="font-weight:700;font-size:15px;margin-bottom:4px">${e.title}</div>
+      <div style="font-size:12px;color:var(--tx3)">📅 ${fmtDate(e.event_date)} · 📍 ${e.venue||"TBA"}</div>
+    </div>`).join("");
+  } catch {}
+}
+
+async function loadGroupChat(id) {
+  try {
+    const r = await fetch(`/committees/${id}/messages`);
+    const msgs = await r.json();
+    const el = $("cmChatBox");
+    if (!msgs.length) { el.innerHTML = `<div style="text-align:center;color:var(--tx3);font-size:13px;padding:40px">No messages yet. Say hello! 👋</div>`; return; }
+    el.innerHTML = msgs.map(m => {
+      const mine = m.sender_id === getUserId(user);
+      return `<div class="msg ${mine?"mine":"theirs"}">
+        ${!mine ? `<div class="msg-sender">${m.sender_name}</div>` : ""}
+        ${m.message}
+        <div class="msg-time">${timeAgo(m.sent_at)}</div>
+      </div>`;
+    }).join("");
+    el.scrollTop = el.scrollHeight;
+  } catch {}
+}
+
+async function sendGroupMsg() {
+  const input = $("cmChatInput");
+  const text = input.value.trim();
+  if (!text || !activeCmId) return;
+  input.value = "";
+  try {
+    await fetch(`/committees/${activeCmId}/messages`, {method:"POST",headers:{ "Authorization": "Bearer " + getToken(),"Content-Type":"application/json"},body:JSON.stringify({sender_id:getUserId(user),message:text})});
+    loadGroupChat(activeCmId);
+  } catch { toast("Could not send message"); }
+}
+
+// ── MY GROUPS ─────────────────────────────────────────────────────────────────
+async function loadMyGroups() {
+  const el = $("myGroupsCont");
+  try {
+    const r = await fetch(`/my-committees/${getUserId(user)}`);
+    const comms = await r.json();
+    if (!comms.length) { el.innerHTML = `<div class="empty"><div class="ei">🔒</div><h4>No private groups yet</h4><p>Join a committee to access its group chat.</p></div>`; return; }
+    el.innerHTML = comms.map(c => `<div class="group-card">
+      <div class="group-hd">
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="font-size:28px">${c.icon||"🏛️"}</span>
+          <div><h4 style="font-size:15px;font-weight:800">${c.name}</h4><small style="color:var(--tx3)">${c.category}</small></div>
+        </div>
+        <button class="btn btn-p btn-sm" onclick="openCommToChat('${c._id||c.id}')">Open Chat →</button>
+      </div>
+    </div>`).join("");
+  } catch { el.innerHTML = `<div class="empty"><div class="ei">⚠️</div><h4>Could not load groups</h4></div>`; }
+}
+
+async function openCommToChat(id) {
+  if (!allComms.length) { const r = await fetch(`/committees`); allComms = await r.json(); }
+  openCommittee(id);
+  setTimeout(() => { const t = $("cmChatTab"); if(t) t.click(); }, 200);
+}
+
+// ── MEMBERS ───────────────────────────────────────────────────────────────────
+async function loadMembers(id) {
+  try {
+    const r = await fetch(`/committees/${id}/members`);
+    const rows = await r.json();
+    const approved = rows.filter(m => m.status==="approved");
+    const pending  = rows.filter(m => m.status==="pending");
+
+    let html = `<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);margin-bottom:12px">Members (${approved.length})</div>`;
+    if (!approved.length) html += `<p style="color:var(--tx3);font-size:13px">No approved members yet.</p>`;
+    else html += approved.map(m => {
+      const removeBtn = userIsAdmin ? `<button class="btn-reject2" style="margin-left:8px" onclick="memberAction('${id}','${m.user_id}','reject')">Remove</button>` : "";
+      return `<div class="member-row">
+        <div class="member-av">${(m.user_name||"?")[0].toUpperCase()}</div>
+        <div style="flex:1"><div class="member-name">${m.user_name}</div><div class="member-email">${m.user_email}</div></div>
+        <span class="member-badge mb-member">Member</span>${removeBtn}
+      </div>`;
+    }).join("");
+    $("cmMemberList").innerHTML = html;
+
+    const pEl = $("cmPendingSection");
+    if (pending.length) {
+      pEl.innerHTML = `<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);margin:20px 0 12px;padding-top:14px;border-top:1px solid var(--bor)">Pending Requests (${pending.length})</div>` +
+        pending.map(m => `<div class="req-row">
+          <div class="member-av">${(m.user_name||"?")[0].toUpperCase()}</div>
+          <div class="req-info"><div class="req-name">${m.user_name}</div><div class="req-meta">${m.user_email} · ${timeAgo(m.requested_at)}</div></div>
+          <div class="req-actions">
+            <button class="btn-accept" onclick="memberAction('${id}','${m.user_id}','approve')">✓ Accept</button>
+            <button class="btn-reject2" onclick="memberAction('${id}','${m.user_id}','reject')">✕ Reject</button>
+          </div>
+        </div>`).join("");
+    } else { pEl.innerHTML = userIsAdmin ? `<p style="color:var(--tx3);font-size:13px;margin-top:16px;padding-top:14px;border-top:1px solid var(--bor)">No pending requests.</p>` : ""; }
+  } catch {}
+}
+
+async function memberAction(commId, userId, action) {
+  try {
+    const r = await fetch(`/committees/${commId}/members/${userId}/${action}`, {method:"POST", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() }});
+    const d = await r.json();
+    if (d.success) {
+      toast(action==="approve" ? "Approved ✅" : "Rejected / Removed");
+      loadMembers(commId); loadSideComms(); loadPendingCount();
+    } else toast("Action failed");
+  } catch { toast("Server error"); }
+}
+
+// ── NOTIFICATIONS ─────────────────────────────────────────────────────────────
+async function loadNotifications() {
+  try {
+    const r = await fetch(`/notifications/${getUserId(user)}`);
+    const notifs = await r.json();
+    const el = $("notifList");
+    await fetch(`/notifications/read-all/${getUserId(user)}`, {method:"POST", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() }});
+    loadNotifBadge();
+    if (!notifs.length) { el.innerHTML = `<div class="empty"><div class="ei">🔔</div><h4>No notifications</h4><p>You're all caught up!</p></div>`; return; }
+    el.innerHTML = notifs.map(n => `<div class="notif-item ${n.is_read?'':'unread'}">
+      <div class="notif-icon">${n.icon||"🔔"}</div>
+      <div>
+        <div class="notif-title">${n.title}</div>
+        <div class="notif-text">${n.body||""}</div>
+        <div class="notif-time">${timeAgo(n.created_at)}</div>
+      </div>
+    </div>`).join("");
+  } catch {}
+}
+
+async function loadNotifBadge() {
+  try {
+    const r = await fetch(`/notifications/unread-count/${getUserId(user)}`);
+    const d = await r.json();
+    const badge = $("notifBadge");
+    if (badge) { if(d.count>0){badge.textContent=d.count;badge.style.display="inline-flex";}else badge.style.display="none"; }
+  } catch {}
+}
+
+// ── ADMIN: CREATE COMMITTEE ───────────────────────────────────────────────────
+async function createCommittee() {
+  const name = $("cName").value.trim(), desc = $("cDesc").value.trim(), cat = $("cCat").value, icon = $("cIcon").value.trim()||"🏛️";
+  if (!name || !desc) { toast("Please fill all fields"); return; }
+  try {
+    const r = await fetch(`/committees`, {method:"POST",headers:{ "Authorization": "Bearer " + getToken(),"Content-Type":"application/json"},body:JSON.stringify({name,description:desc,category:cat,icon,created_by:getUserId(user)})});
+    const d = await r.json();
+    if (d.success) { closeModal("crtCommModal"); $("cName").value=""; $("cDesc").value=""; toast("Committee created! 🏛️"); loadComms(); loadStats(); }
+    else toast(d.error || "Failed");
+  } catch { toast("Server error"); }
+}
+
+// ── ADMIN: DELETE COMMITTEE ───────────────────────────────────────────────────
+function deleteCommittee(id, name) {
+  confirmDelete(`Delete committee "${name}"? All members, events, and announcements will be permanently removed.`, async () => {
+    try {
+      const r = await fetch(`/committees/${id}`, {method:"DELETE", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() }});
+      const d = await r.json();
+      if (d.success) { toast("Committee deleted"); closeModal("commModal"); loadComms(); loadStats(); }
+      else toast(d.error || "Failed to delete");
+    } catch { toast("Server error"); }
+  });
+}
+
+// ── ADMIN: CREATE EVENT ───────────────────────────────────────────────────────
+async function openCreateEvent() {
+  try { const r = await fetch(`/committees`); const c = await r.json(); $("evComm").innerHTML = c.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join(""); } catch {}
+  openModal("crtEvModal");
+}
+
+async function createEvent() {
+  const title = $("evTitle").value.trim(), desc = $("evDesc").value.trim(), date = $("evDate").value,
+        venue = $("evVenue").value.trim(), max = parseInt($("evMax").value)||0, commId = $("evComm").value;
+  if (!title || !date || !venue) { toast("Please fill all fields"); return; }
+  try {
+    const r = await fetch(`/committee-events`, {method:"POST",headers:{ "Authorization": "Bearer " + getToken(),"Content-Type":"application/json"},body:JSON.stringify({committee_id:commId,title,description:desc,event_date:date,venue,max_participants:max,created_by:getUserId(user)})});
+    const d = await r.json();
+    if (d.success) { closeModal("crtEvModal"); $("evTitle").value=""; $("evDesc").value=""; $("evDate").value=""; $("evVenue").value=""; toast("Event created! 📅"); loadEvents(); loadFeed(); loadStats(); }
+    else toast(d.error || "Failed");
+  } catch { toast("Server error"); }
+}
+
+// ── ADMIN: DELETE EVENT ───────────────────────────────────────────────────────
+function deleteEvent(id) {
+  const e = allEvents.find(e => String(e._id||e.id) === String(id));
+  confirmDelete(`Delete event "${e?e.title:'this event'}"? All RSVPs will be removed.`, async () => {
+    try {
+      const r = await fetch(`/committee-events/${id}`, {method:"DELETE", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() }});
+      const d = await r.json();
+      if (d.success) { toast("Event deleted"); loadEvents(); loadFeed(); loadStats(); }
+      else toast(d.error || "Failed to delete");
+    } catch { toast("Server error"); }
+  });
+}
+
+// ── ADMIN: CREATE ANNOUNCEMENT ────────────────────────────────────────────────
+async function openCreateAnn() {
+  try { const r = await fetch(`/committees`); const c = await r.json(); $("annComm").innerHTML = c.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join(""); } catch {}
+  openModal("crtAnnModal");
+}
+
+async function createAnnouncement() {
+  const title = $("annTitle").value.trim(), body = $("annBody").value.trim(), type = $("annType").value, commId = $("annComm").value;
+  if (!title || !body) { toast("Please fill all fields"); return; }
+  try {
+    const r = await fetch(`/announcements`, {method:"POST",headers:{ "Authorization": "Bearer " + getToken(),"Content-Type":"application/json"},body:JSON.stringify({committee_id:commId,title,body,type,created_by:getUserId(user)})});
+    const d = await r.json();
+    if (d.success) { closeModal("crtAnnModal"); $("annTitle").value=""; $("annBody").value=""; toast("Announcement posted! 📢"); loadFeed(); }
+    else toast(d.error || "Failed");
+  } catch { toast("Server error"); }
+}
+
+// ── ADMIN: DELETE ANNOUNCEMENT ────────────────────────────────────────────────
+function deleteAnnouncement(id) {
+  confirmDelete("Delete this announcement permanently?", async () => {
+    try {
+      const r = await fetch(`/announcements/${id}`, {method:"DELETE", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() }});
+      const d = await r.json();
+      if (d.success) { toast("Announcement deleted"); loadFeed(); loadCmAnns(activeCmId); }
+      else toast(d.error || "Failed to delete");
+    } catch { toast("Server error"); }
+  });
+}
+
+// ── ADMIN: VIEW ALL REQUESTS ──────────────────────────────────────────────────
+async function openAdminRequests() {
+  const el = $("adminReqList");
+  try {
+    const r = await fetch(`/committee-requests/pending`);
+    const rows = await r.json();
+    if (!rows.length) { el.innerHTML = `<div class="empty"><div class="ei">✅</div><h4>No pending requests</h4><p>All handled!</p></div>`; openModal("adminReqModal"); return; }
+    el.innerHTML = rows.map(m => `<div class="req-row">
+      <div class="member-av">${(m.user_name||"?")[0].toUpperCase()}</div>
+      <div class="req-info">
+        <div class="req-name">${m.user_name}</div>
+        <div class="req-meta">${m.user_email} · Wants to join ${m.committee_icon} ${m.committee_name} · ${timeAgo(m.requested_at)}</div>
+      </div>
+      <div class="req-actions">
+        <button class="btn-accept" onclick="memberAction('${m.committee_id}','${m.user_id}','approve');openAdminRequests()">✓ Accept</button>
+        <button class="btn-reject2" onclick="memberAction('${m.committee_id}','${m.user_id}','reject');openAdminRequests()">✕ Reject</button>
+      </div>
+    </div>`).join("");
+  } catch { el.innerHTML = `<div class="empty"><div class="ei">⚠️</div><h4>Could not load requests</h4></div>`; }
+  openModal("adminReqModal");
+}
+
+// ── BOOT ──────────────────────────────────────────────────────────────────────
+setupUI();
+Promise.all([loadStats(), loadFeed(), loadSideComms()]);
+loadNotifBadge();
+
+function toggleMenu() {
+  document.getElementById("navMenu").classList.toggle("active");
+}
+</script>
+
+<%- include('../partials/foot') %>

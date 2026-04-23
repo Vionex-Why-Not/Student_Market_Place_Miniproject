@@ -1,0 +1,1826 @@
+<%- include('../partials/head', { title, headExtras: '', extraScript: '' }) %>
+<style>
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
+
+:root {
+  --br: #7B4B2A;
+  --brd: #5A361D;
+  --brl: #C9A27A;
+  --brp: #F0E4D6;
+  --bg: #F7F3EE;
+  --bg2: #EFE6DB;
+  --bg3: #E5D8C8;
+  --bor: #E2D3C3;
+  --tx: #231209;
+  --tx2: #6B4838;
+  --tx3: #9C7B66;
+  --wh: #fff;
+  --teal: #0D9488;
+  --teal-dark: #0F766E;
+  --teal-light: #5EEAD4;
+}
+
+html {
+  scroll-behavior: smooth
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--tx);
+  overflow-x: hidden
+}
+
+/* ══ NAV ══════════════════════════════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 32px;
+  height: 64px;
+  background: rgba(247, 243, 238, .92);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--bor);
+  transition: box-shadow .3s;
+}
+
+.nav.scrolled {
+  box-shadow: 0 4px 24px rgba(43, 27, 18, .1)
+}
+
+.nav-logo {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px
+}
+
+.nav-logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--br), var(--brd));
+  color: #fff;
+  font-weight: 800;
+  font-size: 18px;
+  font-family: 'Lora', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(123, 75, 42, .35);
+}
+
+.nav-logo-text b {
+  display: block;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--br);
+  line-height: 1.1
+}
+
+.nav-logo-text small {
+  font-size: 10px;
+  color: var(--tx3)
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  margin-left: 20px
+}
+
+.nl {
+  text-decoration: none;
+  padding: 7px 13px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tx2);
+  transition: .18s;
+}
+
+.nl:hover {
+  background: var(--bg2);
+  color: var(--br)
+}
+
+.nav-r {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+  align-items: center
+}
+
+.btn-ghost {
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: 1.5px solid var(--bor);
+  background: transparent;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--br);
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  transition: .2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-ghost:hover {
+  background: var(--bg2)
+}
+
+.btn-main {
+  padding: 9px 20px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, var(--br), var(--brd));
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  transition: .2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(123, 75, 42, .3);
+}
+
+.btn-main:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(123, 75, 42, .4)
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  background: var(--bg2);
+  border: 1.5px solid var(--bor);
+  margin-left: auto;
+}
+
+.hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--br);
+  border-radius: 2px;
+  transition: .3s
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px)
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px)
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: rgba(247, 243, 238, .97);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--bor);
+  padding: 16px;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 190;
+}
+
+.mobile-menu.open {
+  display: flex
+}
+
+.mobile-menu a,
+.mobile-menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tx);
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  transition: .15s;
+  width: 100%;
+}
+
+.mobile-menu a:hover,
+.mobile-menu button:hover {
+  background: var(--bg2)
+}
+
+.mobile-menu .mm-div {
+  height: 1px;
+  background: var(--bor);
+  margin: 4px 0
+}
+
+.mobile-menu .mm-primary {
+  background: linear-gradient(135deg, var(--br), var(--brd));
+  color: #fff;
+  border-radius: 10px;
+  justify-content: center;
+}
+
+.mobile-menu .mm-primary:hover {
+  opacity: .92
+}
+
+/* ══ HERO ══════════════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, #F7F3EE 0%, #EFE6DB 50%, #E5D8C8 100%);
+  padding-top: 64px;
+}
+
+/* Decorative background shapes */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden
+}
+
+.hb1 {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 162, 122, .35), transparent 70%);
+  top: -100px;
+  right: -100px;
+  animation: pulse1 8s ease-in-out infinite;
+}
+
+.hb2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(13, 148, 136, .12), transparent 70%);
+  bottom: -80px;
+  left: -60px;
+  animation: pulse2 10s ease-in-out infinite;
+}
+
+.hb3 {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(123, 75, 42, .12), transparent 70%);
+  top: 40%;
+  left: 45%;
+  animation: pulse1 6s ease-in-out infinite reverse;
+}
+
+/* Floating emoji particles */
+.particle {
+  position: absolute;
+  font-size: 28px;
+  opacity: 0.12;
+  animation: drift var(--d, 8s) ease-in-out infinite;
+  animation-delay: var(--dl, 0s);
+}
+
+.p1 {
+  top: 15%;
+  left: 6%;
+  --d: 9s;
+  --dl: 0s
+}
+
+.p2 {
+  top: 25%;
+  right: 8%;
+  --d: 7s;
+  --dl: 1.5s
+}
+
+.p3 {
+  top: 65%;
+  left: 12%;
+  --d: 11s;
+  --dl: 3s
+}
+
+.p4 {
+  bottom: 20%;
+  right: 14%;
+  --d: 8.5s;
+  --dl: 0.5s
+}
+
+.p5 {
+  top: 45%;
+  right: 4%;
+  --d: 10s;
+  --dl: 2s
+}
+
+.p6 {
+  bottom: 35%;
+  left: 4%;
+  --d: 7.5s;
+  --dl: 4s
+}
+
+@keyframes drift {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg)
+  }
+
+  50% {
+    transform: translateY(-22px) rotate(6deg)
+  }
+}
+
+@keyframes pulse1 {
+
+  0%,
+  100% {
+    transform: scale(1)
+  }
+
+  50% {
+    transform: scale(1.08)
+  }
+}
+
+@keyframes pulse2 {
+
+  0%,
+  100% {
+    transform: scale(1)
+  }
+
+  50% {
+    transform: scale(1.12)
+  }
+}
+
+/* Diagonal divider */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: var(--wh);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 32px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* Left text */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--wh);
+  border: 1.5px solid var(--bor);
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--br);
+  margin-bottom: 22px;
+  box-shadow: 0 2px 12px rgba(43, 27, 18, .08);
+  animation: fadeUp .5s ease both;
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  background: #4CAF74;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #4CAF74
+}
+
+.hero-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--tx);
+  margin-bottom: 18px;
+  animation: fadeUp .5s .1s ease both;
+}
+
+.hero-title em {
+  color: var(--br);
+  font-style: italic
+}
+
+.hero-title .teal {
+  color: var(--teal)
+}
+
+.hero-sub {
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: var(--tx2);
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 36px;
+  animation: fadeUp .5s .2s ease both;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  animation: fadeUp .5s .3s ease both;
+}
+
+.hero-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 28px;
+  border-radius: 13px;
+  background: linear-gradient(135deg, var(--br), var(--brd));
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  font-family: 'Sora', sans-serif;
+  box-shadow: 0 6px 24px rgba(123, 75, 42, .35);
+  transition: .25s cubic-bezier(.34, 1.2, .64, 1);
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(123, 75, 42, .45)
+}
+
+.hero-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 28px;
+  border-radius: 13px;
+  background: var(--wh);
+  border: 2px solid var(--bor);
+  color: var(--tx);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  font-family: 'Sora', sans-serif;
+  transition: .25s cubic-bezier(.34, 1.2, .64, 1);
+}
+
+.hero-btn-secondary:hover {
+  border-color: var(--brl);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(43, 27, 18, .1)
+}
+
+.hero-stats {
+  display: flex;
+  gap: 28px;
+  margin-top: 44px;
+  animation: fadeUp .5s .4s ease both;
+}
+
+.hstat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px
+}
+
+.hstat-num {
+  font-family: 'Lora', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--br);
+  line-height: 1
+}
+
+.hstat-lbl {
+  font-size: 11px;
+  color: var(--tx3);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .5px
+}
+
+.hstat-div {
+  width: 1px;
+  height: 36px;
+  background: var(--bor);
+  align-self: center
+}
+
+/* Right: Feature cards stack */
+.hero-cards {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: fadeUp .5s .35s ease both;
+}
+
+.hero-card {
+  background: var(--wh);
+  border: 1.5px solid var(--bor);
+  border-radius: 18px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--tx);
+  box-shadow: 0 4px 20px rgba(43, 27, 18, .07);
+  transition: .28s cubic-bezier(.34, 1.2, .64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--br), var(--brl));
+  border-radius: 4px 0 0 4px;
+}
+
+.hero-card.teal::before {
+  background: linear-gradient(180deg, var(--teal), var(--teal-light))
+}
+
+.hero-card.amber::before {
+  background: linear-gradient(180deg, #D97706, #F59E0B)
+}
+
+.hero-card:hover {
+  transform: translateX(6px) translateY(-2px);
+  box-shadow: 0 10px 32px rgba(43, 27, 18, .14);
+  border-color: var(--brl)
+}
+
+.hero-card.teal:hover {
+  border-color: #99F6E4
+}
+
+.hero-card.amber:hover {
+  border-color: #FCD34D
+}
+
+.hc-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  background: var(--bg2);
+}
+
+.hero-card.teal .hc-icon {
+  background: rgba(13, 148, 136, .1)
+}
+
+.hero-card.amber .hc-icon {
+  background: rgba(217, 119, 6, .1)
+}
+
+.hc-body {
+  flex: 1;
+  min-width: 0
+}
+
+.hc-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 3px
+}
+
+.hc-sub {
+  font-size: 12px;
+  color: var(--tx3)
+}
+
+.hc-arrow {
+  font-size: 18px;
+  color: var(--bor);
+  transition: .3s;
+  flex-shrink: 0
+}
+
+.hero-card:hover .hc-arrow {
+  color: var(--br);
+  transform: translateX(4px)
+}
+
+.hero-card.teal:hover .hc-arrow {
+  color: var(--teal)
+}
+
+.hero-card.amber:hover .hc-arrow {
+  color: #D97706
+}
+
+/* No login badge */
+.no-login-note {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--tx3);
+  font-weight: 500;
+  padding: 10px 14px;
+  background: var(--bg);
+  border: 1px solid var(--bor);
+  border-radius: 10px;
+}
+
+.no-login-note span {
+  font-size: 16px
+}
+
+/* ══ SECTION SHARED ════════════════════════════════════════════ */
+section {
+  padding: 96px 32px;
+  position: relative
+}
+
+.sec-inner {
+  max-width: 1100px;
+  margin: 0 auto
+}
+
+.sec-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--br);
+  margin-bottom: 14px;
+}
+
+.sec-label::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--brl);
+  border-radius: 2px
+}
+
+.sec-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  color: var(--tx);
+}
+
+.sec-sub {
+  font-size: 15px;
+  color: var(--tx2);
+  line-height: 1.7;
+  max-width: 560px
+}
+
+/* ══ HOW IT WORKS ══════════════════════════════════════════════ */
+.how {
+  background: var(--wh)
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 56px;
+  position: relative;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: calc(16.66% + 16px);
+  right: calc(16.66% + 16px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--bor), var(--brl), var(--bor));
+  border-radius: 2px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0
+}
+
+.step-num {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--br), var(--brd));
+  color: #fff;
+  font-family: 'Lora', serif;
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(123, 75, 42, .3);
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.step-icon {
+  font-size: 28px;
+  margin-bottom: 14px
+}
+
+.step-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--tx)
+}
+
+.step-desc {
+  font-size: 13px;
+  color: var(--tx2);
+  line-height: 1.65
+}
+
+/* ══ FEATURES ══════════════════════════════════════════════════ */
+.features-bg {
+  background: linear-gradient(135deg, #2C1208 0%, var(--brd) 50%, #3D1A0A 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.features-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 10% 60%, rgba(201, 162, 122, .1), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 90% 20%, rgba(13, 148, 136, .08), transparent 60%);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 56px;
+  position: relative;
+  z-index: 1;
+}
+
+.feat-card {
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 18px;
+  padding: 26px 22px;
+  backdrop-filter: blur(8px);
+  transition: .25s;
+}
+
+.feat-card:hover {
+  background: rgba(255, 255, 255, .12);
+  transform: translateY(-4px)
+}
+
+.feat-icon {
+  font-size: 32px;
+  margin-bottom: 14px
+}
+
+.feat-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px
+}
+
+.feat-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, .65);
+  line-height: 1.65
+}
+
+.features-bg .sec-label {
+  color: var(--brl)
+}
+
+.features-bg .sec-label::after {
+  background: var(--brl)
+}
+
+.features-bg .sec-title {
+  color: #fff
+}
+
+.features-bg .sec-sub {
+  color: rgba(255, 255, 255, .7)
+}
+
+/* ══ EXPLORE SECTION ═══════════════════════════════════════════ */
+.explore {
+  background: var(--bg)
+}
+
+.explore-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.exp-card {
+  border-radius: 20px;
+  padding: 32px 26px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 2px solid var(--bor);
+  position: relative;
+  overflow: hidden;
+  transition: .3s cubic-bezier(.34, 1.2, .64, 1);
+  background: var(--wh);
+}
+
+.exp-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--br), var(--brl));
+  transform: scaleX(0);
+  transition: .3s;
+  transform-origin: left;
+}
+
+.exp-card.teal::after {
+  background: linear-gradient(90deg, var(--teal), var(--teal-light))
+}
+
+.exp-card.amber::after {
+  background: linear-gradient(90deg, #D97706, #F59E0B)
+}
+
+.exp-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 48px rgba(43, 27, 18, .14);
+  border-color: var(--brl)
+}
+
+.exp-card.teal:hover {
+  border-color: #99F6E4
+}
+
+.exp-card.amber:hover {
+  border-color: #FCD34D
+}
+
+.exp-card:hover::after {
+  transform: scaleX(1)
+}
+
+.exp-icon {
+  font-size: 40px
+}
+
+.exp-badge {
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: var(--bg2);
+  color: var(--tx2);
+  border: 1px solid var(--bor);
+}
+
+.exp-card.teal .exp-badge {
+  background: rgba(13, 148, 136, .1);
+  color: var(--teal);
+  border-color: rgba(13, 148, 136, .2)
+}
+
+.exp-card.amber .exp-badge {
+  background: rgba(217, 119, 6, .1);
+  color: #B45309;
+  border-color: rgba(217, 119, 6, .2)
+}
+
+.exp-title {
+  font-family: 'Lora', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--tx)
+}
+
+.exp-card.teal .exp-title {
+  color: var(--teal-dark)
+}
+
+.exp-card.amber .exp-title {
+  color: #92400E
+}
+
+.exp-desc {
+  font-size: 13px;
+  color: var(--tx2);
+  line-height: 1.65
+}
+
+.exp-cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--br);
+}
+
+.exp-card.teal .exp-cta {
+  color: var(--teal)
+}
+
+.exp-card.amber .exp-cta {
+  color: #D97706
+}
+
+.exp-cta-arrow {
+  transition: .3s
+}
+
+.exp-card:hover .exp-cta-arrow {
+  transform: translateX(5px)
+}
+
+.free-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(39, 104, 64, .1);
+  color: #276840;
+  border: 1px solid rgba(39, 104, 64, .2);
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+/* ══ CTA BAND ══════════════════════════════════════════════════ */
+.cta-band {
+  background: linear-gradient(135deg, var(--br) 0%, var(--brd) 60%, #1A0A03 100%);
+  padding: 80px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(201, 162, 122, .15), transparent 60%);
+}
+
+.cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto
+}
+
+.cta-emoji {
+  font-size: 52px;
+  margin-bottom: 20px;
+  display: block
+}
+
+.cta-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.cta-sub {
+  font-size: 15px;
+  color: rgba(255, 255, 255, .75);
+  margin-bottom: 36px;
+  line-height: 1.65
+}
+
+.cta-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap
+}
+
+.cta-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 32px;
+  border-radius: 13px;
+  background: #fff;
+  color: var(--br);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  font-family: 'Sora', sans-serif;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .2);
+  transition: .25s;
+}
+
+.cta-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .3)
+}
+
+.cta-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 32px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, .12);
+  border: 1.5px solid rgba(255, 255, 255, .25);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  font-family: 'Sora', sans-serif;
+  transition: .25s;
+}
+
+.cta-btn-secondary:hover {
+  background: rgba(255, 255, 255, .2);
+  transform: translateY(-3px)
+}
+
+/* ══ FOOTER ════════════════════════════════════════════════════ */
+footer {
+  background: var(--tx);
+  color: rgba(255, 255, 255, .6);
+  padding: 40px 32px 28px;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-brand b {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+  font-family: 'Lora', serif
+}
+
+.footer-brand p {
+  font-size: 12px;
+  line-height: 1.65;
+  margin-bottom: 16px
+}
+
+.footer-tag {
+  display: inline-block;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .12);
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, .5);
+}
+
+.footer-col h4 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: rgba(255, 255, 255, .4);
+  margin-bottom: 14px
+}
+
+.footer-col a {
+  display: block;
+  font-size: 13px;
+  color: rgba(255, 255, 255, .55);
+  text-decoration: none;
+  margin-bottom: 9px;
+  transition: .15s
+}
+
+.footer-col a:hover {
+  color: #fff
+}
+
+.footer-bottom {
+  max-width: 1100px;
+  margin: 28px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-bottom span {
+  color: rgba(255, 255, 255, .3)
+}
+
+/* ══ ANIMATIONS ════════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px)
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .6s ease, transform .6s ease
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0)
+}
+
+.reveal-d1 {
+  transition-delay: .1s
+}
+
+.reveal-d2 {
+  transition-delay: .2s
+}
+
+.reveal-d3 {
+  transition-delay: .3s
+}
+
+/* ══ RESPONSIVE ════════════════════════════════════════════════ */
+@media(max-width:1024px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 48px 24px
+  }
+
+  .hero-cards {
+    max-width: 480px
+  }
+
+  .steps {
+    gap: 24px
+  }
+
+  .steps::before {
+    display: none
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px
+  }
+
+  .explore-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px
+  }
+}
+
+@media(max-width:768px) {
+  .nav {
+    padding: 0 16px;
+    height: 58px
+  }
+
+  .nav-links,
+  .nav-r {
+    display: none
+  }
+
+  .hamburger {
+    display: flex
+  }
+
+  section {
+    padding: 64px 20px
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 58px
+  }
+
+  .hero-inner {
+    padding: 40px 20px 60px
+  }
+
+  .hero-title {
+    font-size: clamp(30px, 7vw, 44px)
+  }
+
+  .hero-sub {
+    font-size: 14px
+  }
+
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    padding: 12px 22px;
+    font-size: 14px
+  }
+
+  .hero-stats {
+    gap: 20px
+  }
+
+  .hstat-num {
+    font-size: 22px
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: 40px
+  }
+
+  .step {
+    flex-direction: row;
+    text-align: left;
+    gap: 18px
+  }
+
+  .step-num {
+    width: 52px;
+    height: 52px;
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-bottom: 0
+  }
+
+  .step-icon {
+    display: none
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 40px
+  }
+
+  .explore-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 36px
+  }
+
+  .exp-card {
+    padding: 24px 20px
+  }
+
+  .cta-band {
+    padding: 56px 20px
+  }
+
+  .cta-emoji {
+    font-size: 40px
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px
+  }
+
+  footer {
+    padding: 32px 20px 24px
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px
+  }
+}
+
+@media(max-width:480px) {
+  .nav {
+    padding: 0 14px
+  }
+
+  .hero-inner {
+    padding: 32px 16px 56px;
+    gap: 36px
+  }
+
+  .hero-badge {
+    font-size: 11px;
+    padding: 5px 12px
+  }
+
+  .hero-actions {
+    flex-direction: column
+  }
+
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px
+  }
+
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 16px
+  }
+
+  .hstat-div {
+    display: none
+  }
+
+  .sec-title {
+    font-size: clamp(22px, 6vw, 30px)
+  }
+
+  .exp-title {
+    font-size: 18px
+  }
+
+  .cta-actions {
+    flex-direction: column;
+    align-items: stretch
+  }
+
+  .cta-btn-primary,
+  .cta-btn-secondary {
+    width: 100%;
+    justify-content: center
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr
+  }
+
+  .footer-col:last-child {
+    display: none
+  }
+}
+</style>
+
+<!-- ══ NAV ══════════════════════════════════════════════════════ -->
+  <nav class="nav" id="navbar">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-icon">S</div>
+      <div class="nav-logo-text">
+        <b>StudXchange</b>
+        <small>Academic Marketplace</small>
+      </div>
+    </a>
+
+    <div class="nav-links">
+      <a href="/marketplace" class="nl">🛍 Marketplace</a>
+      <a href="/rentpage" class="nl">🔄 Rent</a>
+      <a href="/committee" class="nl">🏛 Committee</a>
+    </div>
+
+    <div class="nav-r">
+      <a href="/login" class="btn-ghost">Sign In</a>
+      <a href="/login#register" class="btn-main">Join Free ✨</a>
+    </div>
+
+    <!-- Hamburger (mobile) -->
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/marketplace">🛍 Marketplace <span style="margin-left:auto;font-size:11px;color:var(--tx3)">Browse
+        freely →</span></a>
+    <a href="/rentpage">🔄 Rent & Borrow <span style="margin-left:auto;font-size:11px;color:var(--tx3)">Browse
+        freely →</span></a>
+    <a href="/committee">🏛 Committee Hub</a>
+    <div class="mm-div"></div>
+    <a href="/login">👤 Sign In</a>
+    <a href="/login" class="mm-primary">✨ Join Free — Create Account</a>
+  </div>
+
+  <!-- ══ HERO ══════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hb1"></div>
+      <div class="hb2"></div>
+      <div class="hb3"></div>
+      <div class="particle p1">📚</div>
+      <div class="particle p2">💻</div>
+      <div class="particle p3">🚲</div>
+      <div class="particle p4">🪑</div>
+      <div class="particle p5">📱</div>
+      <div class="particle p6">🎒</div>
+    </div>
+
+    <div class="hero-inner">
+      <!-- Left: Text -->
+      <div class="hero-left">
+        <div class="hero-badge">
+          <div class="badge-dot"></div>
+          Built for VCET Students
+        </div>
+
+        <h1 class="hero-title">
+          Trade smarter,<br>
+          <em>study better.</em>
+        </h1>
+
+        <p class="hero-sub">
+          The student marketplace built exclusively for VCET. Buy, sell, rent, and borrow — all within your campus
+          community. No middlemen. No strangers.
+        </p>
+
+        <div class="hero-actions">
+          <a href="/login" class="hero-btn-primary">
+            ✨ Join Free
+          </a>
+          <a href="/marketplace" class="hero-btn-secondary">
+            Browse Marketplace →
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hstat">
+            <span class="hstat-num">100%</span>
+            <span class="hstat-lbl">Student Community</span>
+          </div>
+          <div class="hstat-div"></div>
+          <div class="hstat">
+            <span class="hstat-num">Free</span>
+            <span class="hstat-lbl">Always Free to Use</span>
+          </div>
+          <div class="hstat-div"></div>
+          <div class="hstat">
+            <span class="hstat-num">3</span>
+            <span class="hstat-lbl">Sections to Explore</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Feature cards -->
+      <div class="hero-cards">
+        <a href="/marketplace" class="hero-card">
+          <div class="hc-icon">🛍️</div>
+          <div class="hc-body">
+            <div class="hc-title">Marketplace</div>
+            <div class="hc-sub">Buy &amp; sell textbooks, gadgets, furniture and more</div>
+          </div>
+          <span class="hc-arrow">→</span>
+        </a>
+
+        <a href="/rentpage" class="hero-card teal">
+          <div class="hc-icon">🔄</div>
+          <div class="hc-body">
+            <div class="hc-title">Rent &amp; Borrow</div>
+            <div class="hc-sub">Daily rentals — bikes, calculators, laptops &amp; more</div>
+          </div>
+          <span class="hc-arrow">→</span>
+        </a>
+
+        <a href="/committee" class="hero-card amber">
+          <div class="hc-icon">🏛️</div>
+          <div class="hc-body">
+            <div class="hc-title">Committee Hub</div>
+            <div class="hc-sub">Events, clubs, announcements &amp; campus news</div>
+          </div>
+          <span class="hc-arrow">→</span>
+        </a>
+
+        <div class="no-login-note">
+          <span>👀</span>
+          Browse marketplace &amp; rentals freely — no login needed to explore!
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ HOW IT WORKS ══════════════════════════════════════════════ -->
+  <section class="how">
+    <div class="sec-inner">
+      <div class="sec-label reveal">How It Works</div>
+      <h2 class="sec-title reveal reveal-d1">Three steps to get started</h2>
+      <p class="sec-sub reveal reveal-d2">StudXchange is designed to be effortless. No complicated setup — just sign up
+        and start trading with your classmates.</p>
+
+      <div class="steps">
+        <div class="step reveal reveal-d1">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-icon">🎓</div>
+            <div class="step-title">Create your account</div>
+            <div class="step-desc">Sign up with your VCET email in under a minute. It's completely free — no hidden
+              charges, ever.</div>
+          </div>
+        </div>
+        <div class="step reveal reveal-d2">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-icon">🔍</div>
+            <div class="step-title">Browse or list</div>
+            <div class="step-desc">Explore hundreds of listings from fellow students. Or post your own item for sale or
+              rent in seconds.</div>
+          </div>
+        </div>
+        <div class="step reveal reveal-d3">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-icon">💬</div>
+            <div class="step-title">Chat &amp; deal</div>
+            <div class="step-desc">Use our built-in chat to connect directly with buyers or sellers. Meet on campus,
+              exchange, done!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FEATURES ══════════════════════════════════════════════════ -->
+  <section class="features-bg">
+    <div class="sec-inner">
+      <div class="sec-label reveal">Why StudXchange</div>
+      <h2 class="sec-title reveal reveal-d1">Built different, for students</h2>
+      <p class="sec-sub reveal reveal-d2">We know what students actually need — so we built exactly that, nothing more,
+        nothing less.</p>
+
+      <div class="features-grid">
+        <div class="feat-card reveal reveal-d1">
+          <div class="feat-icon">🔒</div>
+          <div class="feat-title">VCET-Only Community</div>
+          <div class="feat-desc">Every user is a verified VCET student. No random strangers — just your campus
+            community.</div>
+        </div>
+        <div class="feat-card reveal reveal-d2">
+          <div class="feat-icon">💬</div>
+          <div class="feat-title">Built-in Chat</div>
+          <div class="feat-desc">Real-time messaging with buyers and sellers. No sharing phone numbers until you're
+            ready.</div>
+        </div>
+        <div class="feat-card reveal reveal-d3">
+          <div class="feat-icon">🔄</div>
+          <div class="feat-title">Rent &amp; Borrow</div>
+          <div class="feat-desc">Don't buy what you'll use once. Rent a bike, calculator, or laptop for just a few days.
+          </div>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-icon">🏛️</div>
+          <div class="feat-title">Committee Hub</div>
+          <div class="feat-desc">Join clubs, track events, and stay updated with campus announcements — all in one
+            place.</div>
+        </div>
+        <div class="feat-card reveal reveal-d1">
+          <div class="feat-icon">💸</div>
+          <div class="feat-title">Always Free</div>
+          <div class="feat-desc">No commissions, no listing fees, no premium plans. StudXchange will always be free for
+            students.</div>
+        </div>
+        <div class="feat-card reveal reveal-d2">
+          <div class="feat-icon">📱</div>
+          <div class="feat-title">Works on Any Device</div>
+          <div class="feat-desc">Fully responsive — browse on your phone between lectures or on your laptop in the
+            hostel.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ EXPLORE SECTION ═══════════════════════════════════════════ -->
+  <section class="explore">
+    <div class="sec-inner">
+      <div class="sec-label reveal">Explore Now</div>
+      <h2 class="sec-title reveal reveal-d1">No account needed to browse</h2>
+      <p class="sec-sub reveal reveal-d2">Jump right in — explore the marketplace and rentals freely. You only need an
+        account when you're ready to buy, sell, or chat.</p>
+
+      <div class="explore-grid">
+        <a href="/marketplace" class="exp-card reveal reveal-d1">
+          <div class="exp-icon">🛍️</div>
+          <span class="exp-badge">Browse Free</span>
+          <h3 class="exp-title">Marketplace</h3>
+          <p class="exp-desc">Textbooks, laptops, electronics, bikes, furniture — find everything students sell at
+            student prices.</p>
+          <div class="free-tag">✅ No login required to browse</div>
+          <div class="exp-cta">
+            Explore Marketplace <span class="exp-cta-arrow">→</span>
+          </div>
+        </a>
+
+        <a href="/rentpage" class="exp-card teal reveal reveal-d2">
+          <div class="exp-icon">🔄</div>
+          <span class="exp-badge">Browse Free</span>
+          <h3 class="exp-title">Rent &amp; Borrow</h3>
+          <p class="exp-desc">Need something for a week? Rent it. Have something unused? List it and earn. Daily rates
+            from fellow students.</p>
+          <div class="free-tag">✅ No login required to browse</div>
+          <div class="exp-cta">
+            Explore Rentals <span class="exp-cta-arrow">→</span>
+          </div>
+        </a>
+
+        <a href="/committee" class="exp-card amber reveal reveal-d3">
+          <div class="exp-icon">🏛️</div>
+          <span class="exp-badge">Campus Life</span>
+          <h3 class="exp-title">Committee Hub</h3>
+          <p class="exp-desc">Events, clubs, announcements. Join committees, participate in college life, and never miss
+            what's happening.</p>
+          <div class="free-tag" style="background:rgba(217,119,6,.1);color:#92400E;border-color:rgba(217,119,6,.2)">🔐
+            Login to join committees</div>
+          <div class="exp-cta">
+            Explore Hub <span class="exp-cta-arrow">→</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA BAND ══════════════════════════════════════════════════ -->
+  <div class="cta-band">
+    <div class="cta-inner">
+      <span class="cta-emoji">🚀</span>
+      <h2 class="cta-title">Ready to join your campus marketplace?</h2>
+      <p class="cta-sub">Create your free account in under a minute. Your entire campus community is already waiting.
+      </p>
+      <div class="cta-actions">
+        <a href="/login" class="cta-btn-primary">✨ Create Free Account</a>
+        <a href="/marketplace" class="cta-btn-secondary">👀 Browse First</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <b>StudXchange</b>
+        <p>The academic marketplace built exclusively for VCET students. Buy, sell, rent, and connect with your campus
+          community.</p>
+        <span class="footer-tag">© 2026 StudXchange</span>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="/marketplace">Marketplace</a>
+        <a href="/rentpage">Rent &amp; Borrow</a>
+        <a href="/committee">Committee Hub</a>
+        <a href="/chat">Messages</a>
+      </div>
+      <div class="footer-col">
+        <h4>Account</h4>
+        <a href="/login">Sign In</a>
+        <a href="/login">Create Account</a>
+        <a href="/myprofile">My Profile</a>
+        <a href="/admin">Admin Portal</a>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <a href="/marketplace">📚 Books &amp; Notes</a>
+        <a href="/marketplace">💻 Laptops</a>
+        <a href="/marketplace">🚲 Bikes</a>
+        <a href="/marketplace">🪑 Furniture</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Built with ❤️ for VCET students</span>
+      <span>Free to use · No ads · No hidden fees</span>
+    </div>
+  </footer>
+
+<script>
+
+// ── Nav scroll shadow ─────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// ── Hamburger menu ────────────────────────────────────────
+function toggleMenu() {
+  const h = document.getElementById('hamburger');
+  const m = document.getElementById('mobileMenu');
+  h.classList.toggle('open');
+  m.classList.toggle('open');
+}
+// Close on outside click
+document.addEventListener('click', e => {
+  const h = document.getElementById('hamburger');
+  const m = document.getElementById('mobileMenu');
+  if (!h.contains(e.target) && !m.contains(e.target)) {
+    h.classList.remove('open');
+    m.classList.remove('open');
+  }
+});
+
+// ── Scroll reveal ─────────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+</script>
+
+<%- include('../partials/foot') %>

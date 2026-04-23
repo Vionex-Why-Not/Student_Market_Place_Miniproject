@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <% if (typeof headExtras !== 'undefined' && headExtras) { %><%- headExtras %><% } %>
+  <% if (typeof extraScript !== 'undefined' && extraScript && extraScript.endsWith('.css')) { %>
+  <link rel="stylesheet" href="<%= extraScript %>">
+  <% } %>
+
+  <!-- ── Global helpers — loaded FIRST in <head> so every page script can use them ── -->
+  <script>
+  // ── Auth storage ────────────────────────────────────────────────────────────
+  function getUser()  {
+    try { return JSON.parse(localStorage.getItem("user")); } catch { return null; }
+  }
+  function getToken() {
+    return localStorage.getItem("token") || "";
+  }
+  // Returns a reliable string ID regardless of whether object has .id or ._id
+  function getUserId(u) {
+    u = u || getUser();
+    if (!u) return null;
+    if (u.id && u.id !== "undefined") return u.id;
+    if (u._id) {
+      var id = (typeof u._id === "object" && u._id.$oid) ? u._id.$oid : String(u._id);
+      if (id && id !== "undefined") return id;
+    }
+    return null;
+  }
+  // Auth header for JSON fetch calls
+  function authHeader() {
+    return { "Authorization": "Bearer " + getToken(), "Content-Type": "application/json" };
+  }
+  // Auth header for FormData (no Content-Type — browser sets multipart boundary)
+  function authHeaderFile() {
+    return { "Authorization": "Bearer " + getToken() };
+  }
+
+  // ── Sign out ─────────────────────────────────────────────────────────────────
+  function signOut() {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  }
+
+  // ── Toast notification ───────────────────────────────────────────────────────
+  function toast(msg) {
+    var t = document.getElementById("__gtoast");
+    if (!t) {
+      t = document.createElement("div");
+      t.id = "__gtoast";
+      t.style.cssText = [
+        "position:fixed","bottom:28px","left:50%",
+        "transform:translateX(-50%) translateY(20px)",
+        "background:#231209","color:#fff","padding:11px 22px",
+        "border-radius:99px","font-size:13px","font-weight:600",
+        "opacity:0","transition:.3s","z-index:99999",
+        "pointer-events:none","white-space:nowrap",
+        "font-family:'Sora',sans-serif","max-width:90vw"
+      ].join(";");
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.opacity = "1";
+    t.style.transform = "translateX(-50%) translateY(0)";
+    clearTimeout(t._tid);
+    t._tid = setTimeout(function() {
+      t.style.opacity = "0";
+      t.style.transform = "translateX(-50%) translateY(20px)";
+    }, 2800);
+  }
+
+  // ── Redirect to login if not authenticated ───────────────────────────────────
+  function requireLogin() {
+    var u = getUser();
+    if (!u || !getUserId(u)) {
+      localStorage.setItem("redirect_after_login", window.location.href);
+      window.location.href = "/login";
+      return false;
+    }
+    return true;
+  }
+
+  // ── Auto-patch stored user: ensure .id always exists ────────────────────────
+  // Runs immediately so getUserId() works before any page script fires
+  (function patchStoredUser() {
+    try {
+      var u = JSON.parse(localStorage.getItem("user"));
+      if (!u) return;
+      var needsPatch = false;
+      if (!u.id || u.id === "undefined") {
+        if (u._id) {
+          u.id = typeof u._id === "object" ? (u._id.$oid || String(u._id)) : String(u._id);
+          needsPatch = true;
+        }
+      }
+      if (needsPatch) localStorage.setItem("user", JSON.stringify(u));
+    } catch(e) {}
+  })();
+  </script>
+</head>
+<body>
